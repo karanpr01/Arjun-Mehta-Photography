@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+/* ---------- 1. THEME TOKENS ----------
+   Dark is the default. Light turns on when the OS prefers light,
+   or when <html data-theme="light">. */
+:root {
+  --bg: #0a0a0a;
+  --surface: #171717;
+  --fg: #f5f2ee;
+  --muted: #a39e93;
+  --line: #383838;
+  --field-line: #77716a;
+  --accent: #d5b779;
+  --accent-2: #80652f;
+  --btn: #d5b779;
+  --btn-fg: #0a0a0a;
+  --btn-hover: #f5f2ee;
+  --veil: rgb(10 10 10 / 0.8);
+  --error: #ffb4ab;
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f2ee;
+    --surface: #e8e0d4;
+    --fg: #171717;
+    --muted: #595959;
+    --line: #d8d0c6;
+    --field-line: #827b6f;
+    --accent: #745b27;
+    --accent-2: #d5b779;
+    --btn: #171717;
+    --btn-fg: #ffffff;
+    --btn-hover: #745b27;
+    --veil: rgb(245 242 238 / 0.85);
+    --error: #b3261e;
+    color-scheme: light;
+  }
+}
+
+:root[data-theme="light"] {
+  --bg: #f5f2ee;
+  --surface: #e8e0d4;
+  --fg: #171717;
+  --muted: #595959;
+  --line: #d8d0c6;
+  --field-line: #827b6f;
+  --accent: #745b27;
+  --accent-2: #d5b779;
+  --btn: #171717;
+  --btn-fg: #ffffff;
+  --btn-hover: #745b27;
+  --veil: rgb(245 242 238 / 0.85);
+  --error: #b3261e;
+  color-scheme: light;
+}
+
+/* ---------- 2. TELL TAILWIND ABOUT THE TOKENS ----------
+   This creates classes like bg-bg, text-fg, border-line, font-serif. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-field: var(--field-line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-btn: var(--btn);
+  --color-btn-fg: var(--btn-fg);
+  --color-btn-hover: var(--btn-hover);
+  --color-veil: var(--veil);
+  --color-error: var(--error);
+
+  --font-serif: "EB Garamond Variable", Georgia, serif;
+  --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Outfit Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* ---------- 3. BASE STYLES ---------- */
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--fg);
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    line-height: 1.75;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+    font-weight: 400;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--bg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Small uppercase labels used for index numbers and metadata */
+@utility label-caps {
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
