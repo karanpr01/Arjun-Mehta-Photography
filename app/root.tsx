@@ -13,6 +13,9 @@ import "@fontsource-variable/manrope";
 import "@fontsource-variable/outfit";
 
 import type { Route } from "./+types/root";
+import { Footer } from "./components/layout/footer";
+import { Header } from "./components/layout/header";
+import { SkipLink } from "./components/layout/SkipLink";
 import "./styles/app.css";
 
 
@@ -35,7 +38,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+      <>
+      <SkipLink />
+      <Header />
+      <main id="main" tabIndex={-1}>
+        <Outlet />
+      </main>
+      <Footer />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
