@@ -1,87 +1,64 @@
-# Welcome to React Router!
+# Arjun Mehta Photography
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Premium photography portfolio and client-enquiry website, built with React, TypeScript, Tailwind CSS and GSAP.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+> **Arjun Mehta is a fictional example name.** Replace it with the real photographer's details before publishing. Anything marked `PLACEHOLDER` in the code is not real content.
 
-## Features
+## Status
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+Work in progress: v0.1.0 (foundation: routes, design tokens, layout shell).
 
-## Getting Started
+## Planned features
 
-### Installation
+- Light and dark themes with a persistent preference
+- Responsive layouts from phone to desktop
+- Filterable portfolio, project story pages and an accessible lightbox
+- Services and pricing, About, Privacy and a custom 404
+- Validated enquiry form
+- SEO (pre-rendered pages, meta tags, sitemap) and WCAG 2.2 AA accessibility target
+- Unit, component and end-to-end tests
 
-Install the dependencies:
+## Tech stack
+
+React 19, TypeScript, Vite, React Router (framework mode), Tailwind CSS 4, GSAP, Lucide, React Hook Form + Zod, Formspree, Vitest, Playwright.
+
+## Getting started
+
+Requires Node.js 22.22 or newer.
 
 ```bash
+git clone https://github.com/YOUR-USERNAME/arjun-mehta-photography.git
+cd arjun-mehta-photography
 npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+Then open http://localhost:5173.
 
-## Building for Production
+## Scripts
 
-Create a production build:
+| Command             | What it does                      |
+| ------------------- | --------------------------------- |
+| `npm run dev`       | Start the local development server |
+| `npm run build`     | Create a production build         |
+| `npm run typecheck` | Check the TypeScript types        |
 
-```bash
-npm run build
+## Folder structure
+
 ```
+app/
+├── components/   Reusable pieces (layout/, ui/)
+├── data/         Content as typed data (site.ts)
+├── routes/       One file per page
+├── styles/       Global CSS and design tokens
+├── root.tsx      HTML shell shared by every page
+└── routes.ts     URL → page map
+```
+
+## Screenshots
+
+_Coming soon._
 
 ## Deployment
 
-### Docker Deployment
-
-To build and run using Docker:
-
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+_Coming soon._
