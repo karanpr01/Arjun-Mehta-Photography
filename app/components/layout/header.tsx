@@ -1,6 +1,7 @@
 import { Link, NavLink } from "react-router";
 import { Container } from "~/components/ui/Container";
 import { site } from "~/data/site";
+import { ThemeToggle } from "~/components/layout/ThemeToggle";;
 
 const links = [
   { to: "/portfolio", label: "Work" },
@@ -29,6 +30,9 @@ export function Header() {
               {link.label}
             </NavLink>
           ))}
+
+          <ThemeToggle/>
+          
           <Link
             to="/contact"
             className="border-line hover:border-accent label-caps border px-4 py-2 transition-colors"
