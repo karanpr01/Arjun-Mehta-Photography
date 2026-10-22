@@ -80,10 +80,15 @@
 
 /* ---------- 3. BASE STYLES ---------- */
 @layer base {
-  html {
+   html {
     background: var(--bg);
     color: var(--fg);
     -webkit-text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+  }
+  /* Freeze the page behind an open menu or lightbox. */
+  html:has(dialog[open]) {
+    overflow: hidden;
   }
   body {
     font-family: var(--font-sans);

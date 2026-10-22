@@ -1,41 +1,41 @@
 import { Link, NavLink } from "react-router";
+import { MobileMenu } from "~/components/layout/MobileMenu";
+import { ThemeToggle } from "~/components/layout/ThemeToggle";
 import { Container } from "~/components/ui/Container";
+import { mainNav } from "~/data/navigation";
 import { site } from "~/data/site";
-
-const links = [
-  { to: "/portfolio", label: "Work" },
-  { to: "/services", label: "Services & Pricing" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-];
 
 export function Header() {
   return (
     <header className="bg-veil border-line sticky top-0 z-40 border-b backdrop-blur-md">
-      <Container className="flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-4">
+      <Container className="flex items-center justify-between gap-6 py-4">
         <Link to="/" className="font-serif text-2xl leading-none">
           {site.shortName}
         </Link>
 
-        <nav aria-label="Main" className="flex flex-wrap items-center gap-x-6 gap-y-2">
-          {links.map((link) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              className={({ isActive }) =>
-                `label-caps hover:text-accent transition-colors ${isActive ? "text-accent" : "text-fg"}`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
+        <div className="flex items-center gap-2 md:gap-6">
+          <nav aria-label="Main" className="hidden items-center gap-6 md:flex">
+            {mainNav.map((link) => (
+              <NavLink
+                key={link.to}
+                to={link.to}
+                className={({ isActive }) =>
+                  `label-caps hover:text-accent transition-colors ${isActive ? "text-accent" : "text-fg"}`
+                }
+              >
+                {link.label}
+              </NavLink>
+            ))}
+          </nav>
+          <ThemeToggle />
           <Link
             to="/contact"
-            className="border-line hover:border-accent label-caps border px-4 py-2 transition-colors"
+            className="border-line hover:border-accent label-caps hidden border px-4 py-2 transition-colors md:inline-block"
           >
             Enquire
           </Link>
-        </nav>
+          <MobileMenu />
+        </div>
       </Container>
     </header>
   );
