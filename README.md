@@ -6,7 +6,7 @@ Premium photography portfolio and client-enquiry website, built with React, Type
 
 ## Status
 
-Work in progress: v0.2.0 (themes, navigation, content data, image pipeline and the Home page).
+Work in progress: v0.3.0 (Home, portfolio with filters, project story pages and lightbox).
 
 ## Features
 
@@ -17,12 +17,15 @@ Done so far:
 - Typed content data for projects and services
 - Image pipeline: AVIF, WebP and JPG at several sizes, with responsive `<picture>` markup
 - Home page: hero, featured works, services preview, about snippet and call-to-action
+- Portfolio grid with category filters kept in the URL, a live result count and an empty state
+- Project story pages with breadcrumbs, previous/next links, related work and a real 404 for unknown projects
+- Accessible lightbox (Escape, arrow keys, focus returns to the photo)
 
 Planned:
 
-- Filterable portfolio, project story pages and an accessible lightbox
-- Services and pricing, About, Privacy and a custom 404
+- Services and pricing, About, Privacy and a custom 404 page
 - Validated enquiry form
+- Motion (GSAP) that respects reduced-motion settings
 - SEO (pre-rendered pages, meta tags, sitemap) and a WCAG 2.2 AA accessibility target
 - Unit, component and end-to-end tests
 
@@ -45,12 +48,12 @@ Then open http://localhost:5173.
 
 ## Scripts
 
-| Command             | What it does                                                    |
-| ------------------- | --------------------------------------------------------------- |
-| `npm run dev`       | Start the local development server                              |
-| `npm run build`     | Create a production build                                       |
-| `npm run typecheck` | Check the TypeScript types                                      |
-| `npm run images`    | Create optimised image sizes from `assets/images-src/`          |
+| Command             | What it does                                           |
+| ------------------- | ------------------------------------------------------ |
+| `npm run dev`       | Start the local development server                     |
+| `npm run build`     | Create a production build                              |
+| `npm run typecheck` | Check the TypeScript types                             |
+| `npm run images`    | Create optimised image sizes from `assets/images-src/` |
 
 ## Adding or changing photos
 
@@ -63,7 +66,7 @@ Then open http://localhost:5173.
 ```
 app/
 ├── components/
-│   ├── gallery/    Photo components (ResponsiveImage, ProjectCard)
+│   ├── │   ├── gallery/    Photo components (ResponsiveImage, ProjectCard, FilterBar, Lightbox, ProjectGallery)
 │   ├── layout/     Header, Footer, MobileMenu, ThemeToggle, SkipLink
 │   ├── sections/   Page sections (Hero, FeaturedWorks, ...)
 │   └── ui/         Small building blocks (Container, ButtonLink, SectionHeading)
@@ -86,4 +89,3 @@ _Coming soon._
 ## Deployment
 
 _Coming soon._
-
