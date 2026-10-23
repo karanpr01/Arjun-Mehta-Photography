@@ -6,6 +6,8 @@ import { SectionHeading } from "~/components/ui/SectionHeading";
 import { processSteps } from "~/data/process";
 import { services } from "~/data/services";
 import { site } from "~/data/site";
+import { Accordion } from "~/components/ui/Accordion";
+import { faqs } from "~/data/faqs";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Services & Pricing | Arjun Mehta Photography" }];
@@ -52,6 +54,20 @@ export default function Services() {
               </li>
             ))}
           </ol>
+        </Container>
+      </section>
+
+      <section aria-labelledby="faq-heading" className="py-24 md:py-32">
+        <Container className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="lg:col-span-4">
+            <p className="label-caps text-accent">Questions</p>
+            <h2 id="faq-heading" className="mt-3 text-4xl leading-tight tracking-[-0.02em] md:text-5xl">
+              Frequently asked questions
+            </h2>
+          </div>
+          <div className="lg:col-span-8">
+            <Accordion items={faqs} name="faq" />
+          </div>
         </Container>
       </section>
 
