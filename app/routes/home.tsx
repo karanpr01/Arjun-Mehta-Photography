@@ -1,6 +1,9 @@
 import type { Route } from "./+types/home";
 import { Hero } from "~/components/sections/Hero";
 import { FeaturedWorks } from "~/components/sections/FeaturedWorks";
+import { ServicePreview } from "~/components/sections/ServicePreview";
+import { AboutSnippet } from "~/components/sections/AboutSnippet";
+import { CtaBanner } from "~/components/sections/CtaBanner";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -14,6 +17,9 @@ export default function Home() {
     <>
       <Hero />
       <FeaturedWorks />
+      <ServicePreview/>
+      <AboutSnippet/>
+      <CtaBanner/>
     </>
   )
 }
