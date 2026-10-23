@@ -2,7 +2,7 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link, data } from "react-router";
 import type { Route } from "./+types/project";
 import { ProjectCard } from "~/components/gallery/ProjectCard";
-import { ResponsiveImage } from "~/components/gallery/ResponsiveImage";
+import { ProjectGallery } from "~/components/gallery/ProjectGallery";
 import { CtaBanner } from "~/components/sections/CtaBanner";
 import { Container } from "~/components/ui/Container";
 import { SectionHeading } from "~/components/ui/SectionHeading";
@@ -55,15 +55,7 @@ export default function Project({ loaderData }: Route.ComponentProps) {
         </Container>
 
         <Container className="mt-12">
-          <figure>
-            <ResponsiveImage
-              id={project.image.id}
-              alt={project.image.alt}
-              sizes="(min-width: 1440px) 1312px, 100vw"
-              priority
-              className="mx-auto h-auto max-h-[85svh] w-auto max-w-full"
-            />
-          </figure>
+           <ProjectGallery images={[project.image, ...(project.gallery ?? [])]} />
         </Container>
       </article>
 
