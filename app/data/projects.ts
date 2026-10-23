@@ -80,3 +80,21 @@ export function getProjectBySlug(slug: string): Project | undefined {
 export function getFeaturedProjects(): Project[] {
   return projects.filter((project) => project.featured);
 }
+
+
+// "Editorial & Fashion" -> "editorial-fashion". Used in the URL: /portfolio?category=editorial-fashion
+export function categorySlug(category: Category): string {
+  return category
+    .toLowerCase()
+    .replace(/&/g, "")
+    .replace(/\s+/g, "-");
+}
+
+// Turns a URL value back into a real category, or null if it is missing or unknown.
+export function categoryFromSlug(slug: string | null): Category | null {
+  return categories.find((category) => categorySlug(category) === slug) ?? null;
+}
+
+export function filterProjects(list: Project[], category: Category | null): Project[] {
+  return category ? list.filter((project) => project.category === category) : list;
+}
