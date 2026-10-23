@@ -2,20 +2,28 @@
 
 Premium photography portfolio and client-enquiry website, built with React, TypeScript, Tailwind CSS and GSAP.
 
-> **Arjun Mehta is a fictional example name.** Replace it with the real photographer's details before publishing. Anything marked `PLACEHOLDER` in the code is not real content.
+> **Arjun Mehta is a fictional example name.** Replace it with the real photographer's details before publishing. Anything marked `PLACEHOLDER` or `SAMPLE` in the code is not real content, and the photographs in `assets/images-src/` are sample images (see `CREDITS.md`).
 
 ## Status
 
-Work in progress: v0.1.0 (foundation: routes, design tokens, layout shell).
+Work in progress: v0.2.0 (themes, navigation, content data, image pipeline and the Home page).
 
-## Planned features
+## Features
 
-- Light and dark themes with a persistent preference
-- Responsive layouts from phone to desktop
+Done so far:
+
+- Light and dark themes, with a saved preference and no flash on load
+- Accessible header, mobile menu (native `<dialog>`) and skip link
+- Typed content data for projects and services
+- Image pipeline: AVIF, WebP and JPG at several sizes, with responsive `<picture>` markup
+- Home page: hero, featured works, services preview, about snippet and call-to-action
+
+Planned:
+
 - Filterable portfolio, project story pages and an accessible lightbox
 - Services and pricing, About, Privacy and a custom 404
 - Validated enquiry form
-- SEO (pre-rendered pages, meta tags, sitemap) and WCAG 2.2 AA accessibility target
+- SEO (pre-rendered pages, meta tags, sitemap) and a WCAG 2.2 AA accessibility target
 - Unit, component and end-to-end tests
 
 ## Tech stack
@@ -37,22 +45,38 @@ Then open http://localhost:5173.
 
 ## Scripts
 
-| Command             | What it does                      |
-| ------------------- | --------------------------------- |
-| `npm run dev`       | Start the local development server |
-| `npm run build`     | Create a production build         |
-| `npm run typecheck` | Check the TypeScript types        |
+| Command             | What it does                                                    |
+| ------------------- | --------------------------------------------------------------- |
+| `npm run dev`       | Start the local development server                              |
+| `npm run build`     | Create a production build                                       |
+| `npm run typecheck` | Check the TypeScript types                                      |
+| `npm run images`    | Create optimised image sizes from `assets/images-src/`          |
+
+## Adding or changing photos
+
+1. Put the original JPG in `assets/images-src/`. Its file name (without `.jpg`) is its `id`.
+2. Run `npm run images`. This writes the sizes to `public/images/` and updates `app/data/imageManifest.json`.
+3. Reference the `id` in `app/data/projects.ts` or in a component, and add a row to `CREDITS.md`.
 
 ## Folder structure
 
 ```
 app/
-├── components/   Reusable pieces (layout/, ui/)
-├── data/         Content as typed data (site.ts)
-├── routes/       One file per page
-├── styles/       Global CSS and design tokens
-├── root.tsx      HTML shell shared by every page
-└── routes.ts     URL → page map
+├── components/
+│   ├── gallery/    Photo components (ResponsiveImage, ProjectCard)
+│   ├── layout/     Header, Footer, MobileMenu, ThemeToggle, SkipLink
+│   ├── sections/   Page sections (Hero, FeaturedWorks, ...)
+│   └── ui/         Small building blocks (Container, ButtonLink, SectionHeading)
+├── data/           Content as typed data (site, projects, services, navigation)
+├── hooks/          Shared React logic (useTheme)
+├── lib/            Non-visual helpers (theme init script)
+├── routes/         One file per page
+├── styles/         Global CSS and design tokens
+├── root.tsx        HTML shell shared by every page
+└── routes.ts       URL → page map
+assets/images-src/  Original photos (not served directly)
+public/             Files served as they are (generated images live in public/images/)
+scripts/            Build-time helper scripts
 ```
 
 ## Screenshots
@@ -62,3 +86,4 @@ _Coming soon._
 ## Deployment
 
 _Coming soon._
+

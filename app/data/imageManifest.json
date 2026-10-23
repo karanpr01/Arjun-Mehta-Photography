@@ -1,0 +1,79 @@
+{
+  "about-portrait": {
+    "width": 2400,
+    "height": 3600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "aura-of-silk-and-stone": {
+    "width": 2400,
+    "height": 3596,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "echoes-of-the-monsoon": {
+    "width": 2400,
+    "height": 3600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "hero": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "solitude-in-cappadocia": {
+    "width": 2400,
+    "height": 1602,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "varanasi-ghats-at-dawn": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "velvet-nocturne": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  }
+}

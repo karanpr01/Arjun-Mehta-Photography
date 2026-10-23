@@ -72,6 +72,9 @@
   --color-btn-hover: var(--btn-hover);
   --color-veil: var(--veil);
   --color-error: var(--error);
+  /* Text that sits on top of photographs. Fixed on purpose: photos get a dark overlay in BOTH themes. */
+  --color-on-image: #f5f2ee;
+  --color-on-image-accent: #d5b779;
 
   --font-serif: "EB Garamond Variable", Georgia, serif;
   --font-sans: "Manrope Variable", ui-sans-serif, system-ui, sans-serif;
@@ -80,21 +83,24 @@
 
 /* ---------- 3. BASE STYLES ---------- */
 @layer base {
-   html {
+  html {
     background: var(--bg);
     color: var(--fg);
     -webkit-text-size-adjust: 100%;
     scrollbar-gutter: stable;
   }
+
   /* Freeze the page behind an open menu or lightbox. */
   html:has(dialog[open]) {
     overflow: hidden;
   }
+
   body {
     font-family: var(--font-sans);
     font-size: 0.9375rem;
     line-height: 1.75;
   }
+
   h1,
   h2,
   h3,
@@ -102,10 +108,12 @@
     font-family: var(--font-serif);
     font-weight: 400;
   }
+
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;
   }
+
   ::selection {
     background: var(--accent);
     color: var(--bg);
