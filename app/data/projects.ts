@@ -98,3 +98,24 @@ export function categoryFromSlug(slug: string | null): Category | null {
 export function filterProjects(list: Project[], category: Category | null): Project[] {
   return category ? list.filter((project) => project.category === category) : list;
 }
+
+
+// The projects either side of this one, in list order. They wrap around: after the last comes the first.
+export function getAdjacentProjects(slug: string): { previous?: Project; next?: Project } {
+  const index = projects.findIndex((project) => project.slug === slug);
+  if (index === -1) return {};
+  return {
+    previous: projects[(index - 1 + projects.length) % projects.length],
+    next: projects[(index + 1) % projects.length],
+  };
+}
+
+// Projects in the same category first, then the rest, never including this one.
+export function getRelatedProjects(slug: string, limit = 2): Project[] {
+  const current = getProjectBySlug(slug);
+  if (!current) return [];
+  const others = projects.filter((project) => project.slug !== slug);
+  const sameCategory = others.filter((project) => project.category === current.category);
+  const rest = others.filter((project) => project.category !== current.category);
+  return [...sameCategory, ...rest].slice(0, limit);
+}
