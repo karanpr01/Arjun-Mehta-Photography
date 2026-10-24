@@ -1,13 +1,14 @@
 import type { Route } from "./+types/services";
+import { Reveal } from "~/components/motion/Reveal";
 import { CtaBanner } from "~/components/sections/CtaBanner";
 import { ServiceCard } from "~/components/sections/ServiceCard";
+import { Accordion } from "~/components/ui/Accordion";
 import { Container } from "~/components/ui/Container";
 import { SectionHeading } from "~/components/ui/SectionHeading";
+import { faqs } from "~/data/faqs";
 import { processSteps } from "~/data/process";
 import { services } from "~/data/services";
 import { site } from "~/data/site";
-import { Accordion } from "~/components/ui/Accordion";
-import { faqs } from "~/data/faqs";
 
 export function meta({ }: Route.MetaArgs) {
   return [{ title: "Services & Pricing | Arjun Mehta Photography" }];
@@ -34,18 +35,22 @@ export default function Services() {
           <h2 id="service-list-heading" className="sr-only">
             Available services
           </h2>
-          <div className="grid gap-6 md:grid-cols-2">
+          <Reveal stagger className="grid gap-6 md:grid-cols-2">
             {services.map((service, index) => (
               <ServiceCard key={service.id} service={service} index={index} />
             ))}
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       <section aria-labelledby="process-heading" className="bg-surface py-24 md:py-32">
         <Container>
-          <SectionHeading id="process-heading" eyebrow="Working process" title="How a commission works" />
-          <ol className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          <SectionHeading
+            id="process-heading"
+            eyebrow="Working process"
+            title="How a commission works"
+          />
+          <Reveal as="ol" stagger className="mt-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             {processSteps.map((step, index) => (
               <li key={step.title} className="border-line border-t pt-6">
                 <p className="label-caps text-accent">{String(index + 1).padStart(2, "0")}</p>
@@ -53,7 +58,7 @@ export default function Services() {
                 <p className="text-muted mt-3 text-sm">{step.description}</p>
               </li>
             ))}
-          </ol>
+          </Reveal>
         </Container>
       </section>
 
@@ -61,7 +66,10 @@ export default function Services() {
         <Container className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-4">
             <p className="label-caps text-accent">Questions</p>
-            <h2 id="faq-heading" className="mt-3 text-4xl leading-tight tracking-[-0.02em] md:text-5xl">
+            <h2
+              id="faq-heading"
+              className="mt-3 text-4xl leading-tight tracking-[-0.02em] md:text-5xl"
+            >
               Frequently asked questions
             </h2>
           </div>
