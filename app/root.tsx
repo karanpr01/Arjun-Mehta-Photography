@@ -16,17 +16,18 @@ import type { Route } from "./+types/root";
 import { Footer } from "./components/layout/footer";
 import { Header } from "./components/layout/header";
 import { SkipLink } from "./components/layout/SkipLink";
+import { NotFoundContent } from "~/components/sections/NotFoundContent";
 import { themeInitScript } from "~/lib/themeInit";
 import "./styles/app.css";
 
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-     <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <script dangerouslySetInnerHTML={{__html: themeInitScript}}/>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <Meta />
         <Links />
       </head>
@@ -41,7 +42,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-      <>
+    <>
       <SkipLink />
       <Header />
       <main id="main" tabIndex={-1}>
@@ -53,6 +54,19 @@ export default function App() {
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+  // A missing page (such as an unknown project) gets the designed 404, with the normal header and footer.
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return (
+      <>
+        <SkipLink />
+        <Header />
+        <main id="main" tabIndex={-1}>
+          <NotFoundContent />
+        </main>
+        <Footer />
+      </>
+    );
+  }
   let message = "Oops!";
   let details = "An unexpected error occurred.";
   let stack: string | undefined;
