@@ -9,9 +9,15 @@ import { faqs } from "~/data/faqs";
 import { processSteps } from "~/data/process";
 import { services } from "~/data/services";
 import { site } from "~/data/site";
+import { pageMeta } from "~/lib/seo";
 
 export function meta({ }: Route.MetaArgs) {
-  return [{ title: "Services & Pricing | Arjun Mehta Photography" }];
+  return pageMeta({
+    title: "Services & Pricing",
+    description:
+      "Photography services offered by Arjun Mehta, how a commission works, and answers to common questions.",
+    path: "/services",
+  });
 }
 
 export default function Services() {

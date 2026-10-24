@@ -2,9 +2,15 @@ import type { Route } from "./+types/contact";
 import { EnquiryForm } from "~/components/forms/EnquiryForm";
 import { Container } from "~/components/ui/Container";
 import { site } from "~/data/site";
+import { pageMeta } from "~/lib/seo";
 
 export function meta({ }: Route.MetaArgs) {
-  return [{ title: "Contact | Arjun Mehta Photography" }];
+  return pageMeta({
+    title: "Contact",
+    description:
+      "Start an enquiry with Arjun Mehta: tell him about your project using the enquiry form.",
+    path: "/contact",
+  });
 }
 
 export default function Contact() {

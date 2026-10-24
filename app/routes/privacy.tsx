@@ -1,9 +1,15 @@
 import type { Route } from "./+types/privacy";
 import { Container } from "~/components/ui/Container";
 import { privacySections } from "~/data/privacy";
+import { pageMeta } from "~/lib/seo";
 
 export function meta({ }: Route.MetaArgs) {
-  return [{ title: "Privacy Policy | Arjun Mehta Photography" }];
+  return pageMeta({
+    title: "Privacy Policy",
+    description:
+      "What this website collects, how enquiries are handled, and how cookies and local storage are used.",
+    path: "/privacy",
+  });
 }
 
 export default function Privacy() {

@@ -4,8 +4,20 @@ export const site = {
   name: "Arjun Mehta Photography",
   shortName: "Arjun Mehta",
   tagline: "Every frame tells a story. Let's tell yours.",
+
+  // The public web address. Set VITE_SITE_URL when you deploy; until then a fake example address is used.
+  url: (
+    (import.meta.env.VITE_SITE_URL as string | undefined) ??
+    "https://example.com"
+  ).replace(/\/$/, ""),
+
+  // The picture shown when a link is shared on social media (made by `npm run og`).
+  ogImage: "/og-default.jpg",
+
+  // Used when a page does not have its own description. Keep it factual.
   description:
-    "Cinematic, editorial photography for people and brands. PLACEHOLDER description, to be rewritten on Day 5.",
+    "Photography portfolio of Arjun Mehta: selected projects, services and a simple way to start an enquiry.",
+
   // About snippet on the Home page. The quote is SAMPLE COPY from the design; confirm it with the photographer.
   aboutQuote:
     "Light is not merely illumination; it is the ink with which we carve memory into permanence.",
@@ -13,9 +25,11 @@ export const site = {
     "[PLACEHOLDER: two or three sentences about the photographer's background and approach.]",
   aboutAlt:
     "Sample portrait of the photographer. Describe the real image here.",
+
   // PLACEHOLDER: explain how pricing really works (quotes, deposits, travel costs...) once the photographer confirms it.
   pricingNote:
     "[PLACEHOLDER: how prices are confirmed, for example after a short conversation.]",
+
   // PLACEHOLDER: the photographer's real typical reply time. Do not promise a time that is not kept.
   replyTime: "[PLACEHOLDER: typical reply time]",
 

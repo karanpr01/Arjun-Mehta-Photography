@@ -6,9 +6,14 @@ import { Container } from "~/components/ui/Container";
 import { SectionHeading } from "~/components/ui/SectionHeading";
 import { about } from "~/data/about";
 import { site } from "~/data/site";
+import { pageMeta } from "~/lib/seo";
 
 export function meta({ }: Route.MetaArgs) {
-  return [{ title: "About | Arjun Mehta Photography" }];
+  return pageMeta({
+    title: "About",
+    description: "About the photographer Arjun Mehta: approach, working style and where he works.",
+    path: "/about",
+  });
 }
 
 export default function About() {

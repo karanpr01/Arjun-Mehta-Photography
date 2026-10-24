@@ -4,12 +4,11 @@ import { FeaturedWorks } from "~/components/sections/FeaturedWorks";
 import { ServicePreview } from "~/components/sections/ServicePreview";
 import { AboutSnippet } from "~/components/sections/AboutSnippet";
 import { CtaBanner } from "~/components/sections/CtaBanner";
+import { site } from "~/data/site";
+import { pageMeta } from "~/lib/seo";
 
-export function meta({ }: Route.MetaArgs) {
-  return [
-    { title: "Arjun Mehta Photography" },
-    { name: "description", content: "Placeholder description. We write the real one on Day 5." },
-  ];
+export function meta({}: Route.MetaArgs) {
+  return pageMeta({ title: site.name, description: site.description, path: "/" });
 }
 
 export default function Home() {
