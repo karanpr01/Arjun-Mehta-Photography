@@ -16,6 +16,8 @@ export const site = {
   // PLACEHOLDER: explain how pricing really works (quotes, deposits, travel costs...) once the photographer confirms it.
   pricingNote:
     "[PLACEHOLDER: how prices are confirmed, for example after a short conversation.]",
+  // PLACEHOLDER: the photographer's real typical reply time. Do not promise a time that is not kept.
+  replyTime: "[PLACEHOLDER: typical reply time]",
 
   // PLACEHOLDER: example.com is a reserved fake domain, so this email can never reach a real person.
   // SAMPLE COPY from the design mock-up. Confirm or rewrite with the photographer.
