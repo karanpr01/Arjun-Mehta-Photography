@@ -6,7 +6,9 @@ Premium photography portfolio and client-enquiry website, built with React, Type
 
 ## Status
 
-Work in progress: v0.3.0 (Home, portfolio with filters, project story pages and lightbox).
+Work in progress: v0.4.0 (all core pages are built: Home, Portfolio, Project, Services, About, Contact, Privacy and 404).
+
+## Features
 
 ## Features
 
@@ -14,20 +16,22 @@ Done so far:
 
 - Light and dark themes, with a saved preference and no flash on load
 - Accessible header, mobile menu (native `<dialog>`) and skip link
-- Typed content data for projects and services
+- Typed content data for projects, services, FAQs and the About page
 - Image pipeline: AVIF, WebP and JPG at several sizes, with responsive `<picture>` markup
 - Home page: hero, featured works, services preview, about snippet and call-to-action
 - Portfolio grid with category filters kept in the URL, a live result count and an empty state
-- Project story pages with breadcrumbs, previous/next links, related work and a real 404 for unknown projects
-- Accessible lightbox (Escape, arrow keys, focus returns to the photo)
+- Project story pages with breadcrumbs, previous/next links, related work and an accessible lightbox
+- Services page with an accessible FAQ accordion
+- About page (the awards section only appears when verified entries exist)
+- Validated enquiry form (React Hook Form + Zod) with loading, success and error states, a spam trap and Formspree support
+- Draft Privacy page that describes what the site really does
+- Designed 404 page with a true 404 status
 
 Planned:
 
-- Services and pricing, About, Privacy and a custom 404 page
-- Validated enquiry form
 - Motion (GSAP) that respects reduced-motion settings
-- SEO (pre-rendered pages, meta tags, sitemap) and a WCAG 2.2 AA accessibility target
-- Unit, component and end-to-end tests
+- SEO: pre-rendered pages, meta tags, sitemap and structured data
+- Unit, component and end-to-end tests, then deployment
 
 ## Tech stack
 
@@ -61,18 +65,44 @@ Then open http://localhost:5173.
 2. Run `npm run images`. This writes the sizes to `public/images/` and updates `app/data/imageManifest.json`.
 3. Reference the `id` in `app/data/projects.ts` or in a component, and add a row to `CREDITS.md`.
 
+## Environment variables
+
+Copy `.env.example` to `.env` and fill in your own value. `.env` is ignored by Git.
+
+| Variable                 | What it is                                                                                         |
+| ------------------------ | -------------------------------------------------------------------------------------------------- |
+| `VITE_FORMSPREE_FORM_ID` | The code at the end of your Formspree form URL. Leave empty to run the form in demo mode (nothing is sent). |
+
+Variables starting with `VITE_` are visible to every visitor. Never put a real secret in one.
+
+## Before publishing
+
+This project ships with sample content. To list every placeholder, run:
+
+```bash
+git grep -n "PLACEHOLDER"
+```
+
+Then:
+
+- Replace the sample photographs in `assets/images-src/`, run `npm run images`, and update `CREDITS.md`
+- Replace `SAMPLE` and `PLACEHOLDER` text in `app/data/` with the photographer's confirmed details
+- Add a real Formspree form ID and send a test enquiry
+- Have the Privacy page reviewed by a qualified person, and fill in its placeholders
+
 ## Folder structure
 
 ```
 app/
 ├── components/
-│   ├── │   ├── gallery/    Photo components (ResponsiveImage, ProjectCard, FilterBar, Lightbox, ProjectGallery)
+│   ├── forms/      Enquiry form
+│   ├── gallery/    Photo components (ResponsiveImage, ProjectCard, FilterBar, Lightbox, ProjectGallery)
 │   ├── layout/     Header, Footer, MobileMenu, ThemeToggle, SkipLink
-│   ├── sections/   Page sections (Hero, FeaturedWorks, ...)
-│   └── ui/         Small building blocks (Container, ButtonLink, SectionHeading)
+│   ├── sections/   Page sections (Hero, FeaturedWorks, ServiceCard, NotFoundContent, ...)
+│   └── ui/         Small building blocks (Container, ButtonLink, SectionHeading, Field, Accordion)
 ├── data/           Content as typed data (site, projects, services, navigation)
 ├── hooks/          Shared React logic (useTheme)
-├── lib/            Non-visual helpers (theme init script)
+├── lib/            Non-visual helpers (theme init script, enquiry schema, form submit helper)
 ├── routes/         One file per page
 ├── styles/         Global CSS and design tokens
 ├── root.tsx        HTML shell shared by every page
