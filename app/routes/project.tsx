@@ -9,6 +9,7 @@ import { SectionHeading } from "~/components/ui/SectionHeading";
 import { getAdjacentProjects, getProjectBySlug, getRelatedProjects } from "~/data/projects";
 import { jpgPath } from "~/lib/images";
 import { pageMeta } from "~/lib/seo";
+import { breadcrumbSchema, projectSchema } from "~/lib/structuredData";
 
 // The loader runs BEFORE the page shows. If the slug is unknown, we stop with a real 404.
 export function loader({ params }: Route.LoaderArgs) {
@@ -32,11 +33,21 @@ export function meta({ loaderData }: Route.MetaArgs) {
       noindex: true,
     });
 
+  const image = jpgPath(project.image.id, 1200);
+
   return pageMeta({
     title: project.title,
     description: `${project.title}: ${project.category} project by Arjun Mehta, ${project.location}, ${project.year}.`,
     path: `/portfolio/${project.slug}`,
-    image: jpgPath(project.image.id, 1200),
+    image,
+    jsonLd: [
+      projectSchema(project, image),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Portfolio", path: "/portfolio" },
+        { name: project.title, path: `/portfolio/${project.slug}` },
+      ]),
+    ],
   });
 }
 

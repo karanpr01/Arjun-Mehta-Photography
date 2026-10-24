@@ -6,6 +6,7 @@ type PageSeo = {
   path: string; // the page's address without the domain, e.g. "/services"
   image?: string; // a path like "/images/hero-1200.jpg"; defaults to the site-wide share picture
   noindex?: boolean; // true = ask search engines to leave this page out
+  jsonLd?: Record<string, unknown>[]; // structured data blocks (see structuredData.ts)
 };
 
 // Builds every title / description / share tag for one page.
@@ -16,6 +17,7 @@ export function pageMeta({
   path,
   image = site.ogImage,
   noindex = false,
+  jsonLd = [],
 }: PageSeo) {
   const fullTitle = title === site.name ? title : `${title} | ${site.name}`;
   const url = `${site.url}${path}`;
@@ -42,5 +44,8 @@ export function pageMeta({
     { name: "twitter:image", content: imageUrl },
 
     ...(noindex ? [{ name: "robots", content: "noindex" }] : []),
+
+    // Structured data for search engines.
+    ... jsonLd.map((block) => ({ "script:ld+json": block })),
   ];
 }
