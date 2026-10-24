@@ -1,15 +1,16 @@
+import { data } from "react-router";
 import type { Route } from "./+types/not-found";
+import { NotFoundContent } from "~/components/sections/NotFoundContent";
 
-export function meta({}: Route.MetaArgs) {
+// Tell browsers and search engines this really is a 404, not a normal page.
+export function loader() {
+  return data(null, { status: 404 });
+}
+
+export function meta({ }: Route.MetaArgs) {
   return [{ title: "Page not found | Arjun Mehta Photography" }];
 }
 
 export default function NotFound() {
-  return (
-    <div className="px-6 py-24 md:px-16">
-      <p className="label-caps text-accent">Error 404</p>
-      <h1 className="mt-4 text-5xl md:text-7xl">Page not found</h1>
-      <p className="text-muted mt-6">Stub page. The designed 404 arrives on Day 4.</p>
-    </div>
-  );
+  return <NotFoundContent />;
 }
