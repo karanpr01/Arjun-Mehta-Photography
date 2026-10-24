@@ -12,9 +12,14 @@ import {
   type Category,
 } from "~/data/projects";
 import { useHydrated } from "~/hooks/useHydrated";
+import { pageMeta } from "~/lib/seo";
 
 export function meta({ }: Route.MetaArgs) {
-  return [{ title: "Portfolio | Arjun Mehta Photography" }];
+  return pageMeta({
+    title: "Portfolio",
+    description: "Selected photography projects by Arjun Mehta, filterable by category.",
+    path: "/portfolio",
+  });
 }
 
 // The editorial rhythm: a wide card, then tall cards. The pattern repeats for longer lists.

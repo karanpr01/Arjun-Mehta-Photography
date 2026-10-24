@@ -12,6 +12,8 @@ import "@fontsource-variable/eb-garamond/wght-italic.css";
 import "@fontsource-variable/manrope";
 import "@fontsource-variable/outfit";
 
+import ebGaramondLatin from "@fontsource-variable/eb-garamond/files/eb-garamond-latin-wght-normal.woff2?url";
+import manropeLatin from "@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2?url";
 import type { Route } from "./+types/root";
 import { Footer } from "./components/layout/footer";
 import { Header } from "./components/layout/header";
@@ -20,6 +22,25 @@ import { NotFoundContent } from "~/components/sections/NotFoundContent";
 import { themeInitScript } from "~/lib/themeInit";
 import "./styles/app.css";
 
+// Tell the browser about the two most important font files early, so text appears sooner.
+// (Only the Latin letters of the two fonts used above the fold. More preloads would slow the photo.)
+export const links: Route.LinksFunction = () => [
+  { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
+  {
+    rel: "preload",
+    href: ebGaramondLatin,
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
+  {
+    rel: "preload",
+    href: manropeLatin,
+    as: "font",
+    type: "font/woff2",
+    crossOrigin: "anonymous",
+  },
+];
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (

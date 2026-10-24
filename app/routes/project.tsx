@@ -7,6 +7,9 @@ import { CtaBanner } from "~/components/sections/CtaBanner";
 import { Container } from "~/components/ui/Container";
 import { SectionHeading } from "~/components/ui/SectionHeading";
 import { getAdjacentProjects, getProjectBySlug, getRelatedProjects } from "~/data/projects";
+import { jpgPath } from "~/lib/images";
+import { pageMeta } from "~/lib/seo";
+import { breadcrumbSchema, projectSchema } from "~/lib/structuredData";
 
 // The loader runs BEFORE the page shows. If the slug is unknown, we stop with a real 404.
 export function loader({ params }: Route.LoaderArgs) {
@@ -21,8 +24,31 @@ export function loader({ params }: Route.LoaderArgs) {
 }
 
 export function meta({ loaderData }: Route.MetaArgs) {
-  const title = loaderData?.project.title ?? "Project not found";
-  return [{ title: `${title} | Arjun Mehta Photography` }];
+  const project = loaderData?.project;
+  if (!project)
+    return pageMeta({
+      title: "Project not found",
+      description: "This project could not be found.",
+      path: "/404",
+      noindex: true,
+    });
+
+  const image = jpgPath(project.image.id, 1200);
+
+  return pageMeta({
+    title: project.title,
+    description: `${project.title}: ${project.category} project by Arjun Mehta, ${project.location}, ${project.year}.`,
+    path: `/portfolio/${project.slug}`,
+    image,
+    jsonLd: [
+      projectSchema(project, image),
+      breadcrumbSchema([
+        { name: "Home", path: "/" },
+        { name: "Portfolio", path: "/portfolio" },
+        { name: project.title, path: `/portfolio/${project.slug}` },
+      ]),
+    ],
+  });
 }
 
 export default function Project({ loaderData }: Route.ComponentProps) {
@@ -55,7 +81,7 @@ export default function Project({ loaderData }: Route.ComponentProps) {
         </Container>
 
         <Container className="mt-12">
-           <ProjectGallery images={[project.image, ...(project.gallery ?? [])]} />
+          <ProjectGallery images={[project.image, ...(project.gallery ?? [])]} />
         </Container>
       </article>
 

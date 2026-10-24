@@ -1,3 +1,4 @@
+import { Reveal } from "~/components/motion/Reveal";
 import { ButtonLink } from "~/components/ui/ButtonLink";
 import { Container } from "~/components/ui/Container";
 import { SectionHeading } from "~/components/ui/SectionHeading";
@@ -13,7 +14,7 @@ export function ServicePreview() {
                     </ButtonLink>
                 </SectionHeading>
 
-                <ol className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                <Reveal as="ol" stagger className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
                     {services.map((service, index) => (
                         <li key={service.id} className="bg-surface border-line flex flex-col border p-6">
                             <p className="label-caps text-accent">{String(index + 1).padStart(2, "0")}</p>
@@ -21,7 +22,7 @@ export function ServicePreview() {
                             <p className="text-muted mt-4 text-sm">{service.summary}</p>
                         </li>
                     ))}
-                </ol>
+                </Reveal>
             </Container>
         </section>
     );
