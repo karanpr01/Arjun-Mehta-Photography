@@ -36,7 +36,7 @@ export default function About() {
           <div className="lg:col-span-7">
             <p className="label-caps text-accent">About {site.shortName}</p>
             <h1 id="about-page-heading" className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl">
-              Quiet truth, <em className="text-accent">raw grace.</em>
+              {about.headline.lead} <em className="text-accent">{about.headline.emphasis}</em>
             </h1>
 
             <div className="mt-8 max-w-xl space-y-5 text-lg">

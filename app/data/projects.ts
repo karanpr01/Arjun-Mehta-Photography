@@ -65,7 +65,7 @@ export const projects: Project[] = [
     title: "Solitude in Cappadocia",
     category: "Documentary & Fine Art",
     location: "Göreme, Türkiye",
-    year: "2024",
+    year: "2025",
     plate: "01",
     descriptor: "Self-initiated travel series · Numbered print edition",
     summary:
@@ -190,7 +190,7 @@ export const projects: Project[] = [
     title: "Midnight at the Fort",
     category: "Editorial & Fashion",
     location: "Fort, Mumbai",
-    year: "2024",
+    year: "2025",
     plate: "02",
     descriptor: "Independent label editorial · Verlaine Studio",
     summary:
@@ -211,7 +211,7 @@ export const projects: Project[] = [
     title: "Varanasi Ghats at Dawn",
     category: "Portraiture & Branding",
     location: "Varanasi, India",
-    year: "2023",
+    year: "2024",
     plate: "03",
     descriptor: "Humanist portrait series · Published in Atlas & Ember",
     summary:
@@ -221,7 +221,7 @@ export const projects: Project[] = [
       { label: "Client", value: "Atlas & Ember (independent travel magazine)" },
       {
         label: "Period & light",
-        value: "Monsoon 2023 · Pre-dawn and overcast",
+        value: "Monsoon 2024 · Pre-dawn and overcast",
       },
       { label: "Location", value: "Assi to Dashashwamedh Ghat, Varanasi" },
       { label: "Instrumentation", value: "Sony A7 IV · 35mm f/1.4" },
@@ -260,14 +260,14 @@ export const projects: Project[] = [
     title: "The Ceramicist's Hands",
     category: "Portraiture & Branding",
     location: "Jaipur, India",
-    year: "2023",
+    year: "2024",
     plate: "05",
     descriptor: "Artisan brand campaign · Neel Pottery Studio",
     summary:
       "A brand campaign built around hands, clay and window light for a family-run blue pottery studio that has worked the same wheel for four generations.",
     facts: [
       { label: "Client", value: "Neel Pottery Studio, Jaipur" },
-      { label: "Period & light", value: "October 2023 · North window light" },
+      { label: "Period & light", value: "October 2024 · North window light" },
       { label: "Location", value: "Jaipur, India" },
       { label: "Instrumentation", value: "Sony A7 IV · 50mm f/1.2" },
     ],
@@ -357,13 +357,13 @@ export const projects: Project[] = [
     title: "Echoes of the Monsoon",
     category: "Documentary & Fine Art",
     location: "Varanasi, India",
-    year: "2023–2024",
+    year: "2024–2025",
     descriptor: "Personal monograph",
     summary:
       "A two-year personal project along the Ganges, following daily rituals through two monsoon seasons.",
     facts: [
       { label: "Client", value: "Personal work" },
-      { label: "Period & light", value: "Two monsoon seasons, 2023 and 2024" },
+      { label: "Period & light", value: "Two monsoon seasons, 2025 and 2024" },
       { label: "Location", value: "Varanasi, India" },
       { label: "Instrumentation", value: "Sony A7 IV · 35mm f/1.4" },
     ],

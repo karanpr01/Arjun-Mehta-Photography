@@ -1,6 +1,5 @@
 // This page must describe what the site REALLY does. If the site changes (for example,
 // analytics or a different form service is added), update this file in the same change.
-// It is a DRAFT: have it reviewed before the site is used for a real business.
 
 import { site } from "~/data/site";
 
@@ -17,7 +16,8 @@ export const privacySections: PrivacySection[] = [
     id: "who-we-are",
     title: "Who runs this site",
     paragraphs: [
-      "[PLACEHOLDER: the photographer's or business's legal name, address and contact email.]",
+      `This website is a concept project. ${site.shortName} is a fictional photographer, invented to show what a professional photography website can look like.`,
+      `The site was designed and built by ${site.builtBy.name}, who also receives any message sent through the enquiry form.`,
     ],
   },
   {
@@ -39,9 +39,9 @@ export const privacySections: PrivacySection[] = [
     id: "how-enquiries-are-handled",
     title: "How enquiries are handled",
     paragraphs: [
-      "When you send the form, your details are passed to Formspree, a form service that emails them to us. We use them only to reply to your enquiry.",
+      "When you send the form, your details are passed to Formspree, a form service that emails them to the site's developer. They are used only to reply to your message.",
       "Formspree is a separate company with its own privacy policy and its own rules for how long it keeps submissions.",
-      "[PLACEHOLDER: how long enquiries are kept by us, and how to ask for them to be deleted.]",
+      "Messages are kept only as long as needed to reply, and are deleted on request.",
     ],
     link: {
       label: "Read Formspree's privacy policy",
@@ -61,21 +61,21 @@ export const privacySections: PrivacySection[] = [
     title: "Fonts, images and links",
     paragraphs: [
       "The fonts and images on this site are served from the site itself, so your browser does not contact font or image services when you visit.",
-      "Links to social networks and other websites take you away from this site. Those sites have their own privacy practices.",
+      "Links to other websites take you away from this site. Those sites have their own privacy practices.",
     ],
   },
   {
     id: "hosting",
     title: "Hosting",
     paragraphs: [
-      "This site is hosted by [PLACEHOLDER: hosting provider]. Like most web hosts, the provider may keep standard server logs, such as IP addresses and request times, for security and operations.",
+      "This site is hosted by Vercel. Like most web hosts, the provider may keep standard server logs, such as IP addresses and request times, for security and operations.",
     ],
   },
   {
     id: "your-rights",
     title: "Your rights",
     paragraphs: [
-      "[PLACEHOLDER: the rights that apply to visitors, such as asking to see, correct or delete their information, and how to make a request. This depends on where the photographer and the visitors are based, and needs professional review.]",
+      `You can ask to see, correct or delete any personal information you sent through the enquiry form. Email ${site.email} and the request will be handled as soon as possible.`,
     ],
   },
   {
@@ -83,7 +83,7 @@ export const privacySections: PrivacySection[] = [
     title: "Changes to this page",
     paragraphs: [
       "If the way this site works changes, this page will be updated.",
-      "Last reviewed: [PLACEHOLDER: date].",
+      "Last reviewed: 25 October 2026.",
     ],
   },
   {

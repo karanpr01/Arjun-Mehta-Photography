@@ -3,6 +3,7 @@ import { EnquiryForm } from "~/components/forms/EnquiryForm";
 import { Container } from "~/components/ui/Container";
 import { site } from "~/data/site";
 import { pageMeta } from "~/lib/seo";
+import { ConceptNotice } from "~/components/ui/ConceptNotice";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -36,6 +37,7 @@ export default function Contact() {
             <h2 id="enquiry-heading" className="sr-only">
               Enquiry form
             </h2>
+            <ConceptNotice className="mb-8"/>
             <EnquiryForm />
           </div>
 

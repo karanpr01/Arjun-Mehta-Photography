@@ -22,8 +22,8 @@ export default function Privacy() {
             Privacy Policy
           </h1>
           <p className="border-line text-muted mt-8 max-w-2xl border p-4 text-sm">
-            <strong className="text-fg">Draft.</strong> This page describes how this website is built to
-            work. It must be reviewed and completed before the site is used for a real business.
+            <strong className="text-fg">Concept project.</strong> This page describes how this demo
+            website really works.
           </p>
         </Container>
       </section>

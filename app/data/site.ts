@@ -72,8 +72,10 @@ export const site = {
   social: [] as { label: string; href: string }[],
 
   // The credit that shows this is a concept project (shown in the footer and on the About page).
-  builtBy: {
+    builtBy: {
+    name: "Prem Karn",
     label: "Concept project designed and built by Prem",
+    // Where the credit should link to (your portfolio or LinkedIn). Leave empty for no link.
     href: "" as string,
   },
 };
