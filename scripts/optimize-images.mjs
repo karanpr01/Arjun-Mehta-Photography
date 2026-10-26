@@ -2,7 +2,7 @@
 // and writes app/data/imageManifest.json so the site knows each image's shape.
 // Run it with:  npm run images
 
-import { mkdir, readdir, stat, writeFile } from "node:fs/promises";
+import { mkdir, readdir, rm, stat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
@@ -31,7 +31,9 @@ async function exists(file) {
 async function main() {
   await mkdir(OUTPUT_DIR, { recursive: true });
 
-  const files = (await readdir(SOURCE_DIR)).filter((name) => /\.(jpe?g|png)$/i.test(name));
+  const files = (await readdir(SOURCE_DIR)).filter((name) =>
+    /\.(jpe?g|png)$/i.test(name),
+  );
   if (files.length === 0) {
     console.log(`No photos found in ${SOURCE_DIR}/ yet.`);
     return;
@@ -51,7 +53,10 @@ async function main() {
 
     // Never enlarge a photo: a 1000px photo must not get a 2400px version.
     const widths = [
-      ...new Set([...SIZES.filter((w) => w < sourceWidth), Math.min(sourceWidth, MAX_WIDTH)]),
+      ...new Set([
+        ...SIZES.filter((w) => w < sourceWidth),
+        Math.min(sourceWidth, MAX_WIDTH),
+      ]),
     ].sort((a, b) => a - b);
 
     const largest = widths[widths.length - 1];
@@ -67,14 +72,31 @@ async function main() {
     for (const width of widths) {
       for (const [ext, encode] of Object.entries(FORMATS)) {
         const target = path.join(OUTPUT_DIR, `${id}-${width}.${ext}`);
-        if ((await exists(target)) && (await stat(target)).mtimeMs > sourceTime) continue; // already up to date
-        const image = sharp(sourcePath).rotate().resize({ width, withoutEnlargement: true });
+        if ((await exists(target)) && (await stat(target)).mtimeMs > sourceTime)
+          continue; // already up to date
+        const image = sharp(sourcePath)
+          .rotate()
+          .resize({ width, withoutEnlargement: true });
         await encode(image).toFile(target);
         made += 1;
       }
     }
 
-    console.log(`${id}: ${sourceWidth}x${sourceHeight} -> widths ${widths.join(", ")} (${made} new files)`);
+    console.log(
+      `${id}: ${sourceWidth}x${sourceHeight} -> widths ${widths.join(", ")} (${made} new files)`,
+    );
+  }
+
+  // Remove generated files for photos that no longer exist in assets/images-src/.
+  const ids = Object.keys(manifest);
+  for (const name of await readdir(OUTPUT_DIR)) {
+    const belongs = ids.some((id) =>
+      new RegExp(`^${id}-\\d+\\.(avif|webp|jpg)$`).test(name),
+    );
+    if (!belongs) {
+      await rm(path.join(OUTPUT_DIR, name));
+      console.log(`Removed old file ${name}`);
+    }
   }
 
   await writeFile(MANIFEST_FILE, JSON.stringify(manifest, null, 2) + "\n");
