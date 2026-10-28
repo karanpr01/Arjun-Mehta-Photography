@@ -10,7 +10,7 @@ export function AboutSnippet() {
                 <div className="lg:col-span-5">
                     <div className="bg-bg aspect-4/5 overflow-hidden">
                         <ResponsiveImage
-                            id="about-portrait"
+                            id="portrait2"
                             alt={site.aboutAlt}
                             sizes="(min-width: 1024px) 40vw, 100vw"
                             className="h-full w-full object-cover"

@@ -75,7 +75,7 @@ export function Footer() {
             ) : (
               site.builtBy.label
             )}
-            .
+            . {site.builtBy.imageNote}
           </p>
         </div>
       </Container>

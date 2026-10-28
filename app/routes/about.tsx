@@ -24,7 +24,7 @@ export default function About() {
           <div className="lg:col-span-5">
             <div className="bg-surface aspect-4/5 overflow-hidden">
               <ResponsiveImage
-                id="about-portrait"
+                id="portrait2"
                 alt={site.aboutAlt}
                 sizes="(min-width: 1024px) 40vw, 100vw"
                 priority
