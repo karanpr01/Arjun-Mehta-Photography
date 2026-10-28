@@ -8,6 +8,7 @@ import { site } from "~/data/site";
 import { pageMeta } from "~/lib/seo";
 import { personSchema, websiteSchema } from "~/lib/structuredData";
 import { Ticker } from "~/components/sections/Ticker";
+import { TestimonialPress } from "~/components/sections/TestimonialPress";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -26,6 +27,7 @@ export default function Home() {
       <FeaturedWorks />
       <AboutSnippet />
       <ServicePreview />
+      <TestimonialPress/>
       <CtaBanner />
     </>
   )

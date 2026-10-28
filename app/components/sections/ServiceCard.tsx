@@ -12,6 +12,7 @@ export function ServiceCard({ service, index }: Props) {
 
     return (
         <article
+            id={service.id}
             aria-labelledby={headingId}
             className="bg-surface border-line flex flex-col border p-6 md:p-8"
         >
