@@ -22,10 +22,10 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Ticker/>
+      <Ticker />
       <FeaturedWorks />
-      <ServicePreview />
       <AboutSnippet />
+      <ServicePreview />
       <CtaBanner />
     </>
   )
