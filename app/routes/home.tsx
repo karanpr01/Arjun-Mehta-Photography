@@ -7,6 +7,7 @@ import { CtaBanner } from "~/components/sections/CtaBanner";
 import { site } from "~/data/site";
 import { pageMeta } from "~/lib/seo";
 import { personSchema, websiteSchema } from "~/lib/structuredData";
+import { Ticker } from "~/components/sections/Ticker";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -21,6 +22,7 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <Ticker/>
       <FeaturedWorks />
       <ServicePreview />
       <AboutSnippet />
