@@ -53,7 +53,7 @@ export function Lightbox({ images, index, open, onClose, onIndexChange }: Props)
             onClick={(event) => {
                 if (event.target === event.currentTarget) onClose();
             }}
-            className="text-on-image m-0 h-dvh max-h-none w-dvw max-w-none border-0 bg-[#050505]/95 p-4 backdrop:bg-transparent open:flex"
+            className="text-on-image m-0 h-dvh max-h-none w-dvw max-w-none overflow-y-auto border-0 bg-[#050505]/95 p-4 backdrop:bg-transparent open:flex"
         >
             <button
                 type="button"
@@ -73,8 +73,19 @@ export function Lightbox({ images, index, open, onClose, onIndexChange }: Props)
                         alt={image.alt}
                         sizes="100vw"
                         priority
-                        className="h-auto max-h-[78svh] w-auto max-w-full object-contain"
+                        className="h-auto max-h-[62svh] w-auto max-w-full object-contain"
                     />
+                    {(image.title || image.note) && (
+                        <div className="max-w-2xl text-center">
+                            <p className="label-caps text-on-image-accent">
+                                {image.plate ? `Plate ${image.plate} // ` : ""}
+                                {image.title}
+                            </p>
+                            {image.time && <p className="label-caps text-on-image/70 mt-1">{image.time}</p>}
+                            {image.note && <p className="text-on-image/85 mt-3 text-sm">{image.note}</p>}
+                            {image.kit && <p className="label-caps text-on-image/60 mt-3">{image.kit}</p>}
+                        </div>
+                    )}
 
                     {many && (
                         <div className="flex items-center gap-4">
