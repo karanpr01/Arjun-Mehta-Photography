@@ -57,6 +57,7 @@ export type Project = {
   gallery?: ProjectImage[]; // extra photos for the story page
   story?: ProjectStory; // the long-form essay (only some projects have one)
   featured?: boolean; // shown on the Home page
+  banner?: boolean; // shown as the wide banner at the end of the portfolio page
 };
 
 export const projects: Project[] = [
@@ -334,6 +335,7 @@ export const projects: Project[] = [
     category: "Editorial & Fashion",
     location: "Rajasthan, India",
     year: "2024",
+    plate: "08",
     descriptor: "Collection campaign · Sarvani Atelier",
     summary:
       "Handwoven silk and gold embroidery photographed in carved sandstone halls, for a small Jaipur label celebrating its first collection.",
@@ -358,6 +360,7 @@ export const projects: Project[] = [
     category: "Documentary & Fine Art",
     location: "Varanasi, India",
     year: "2024–2025",
+    plate: "09",
     descriptor: "Personal monograph",
     summary:
       "A two-year personal project along the Ganges, following daily rituals through two monsoon seasons.",
@@ -379,6 +382,7 @@ export const projects: Project[] = [
     category: "Portraiture & Branding",
     location: "Mumbai",
     year: "2024",
+    banner: true,
     descriptor: "Portrait series · Cobalt Editions",
     summary:
       "An intimate portrait series about solitude and quiet confidence, made late at night in a Mumbai hotel lounge with a single warm lamp for light.",

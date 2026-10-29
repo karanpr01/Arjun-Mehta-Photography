@@ -3,7 +3,19 @@ import { ButtonLink } from "~/components/ui/ButtonLink";
 import { Container } from "~/components/ui/Container";
 import { site } from "~/data/site";
 
-export function CtaBanner() {
+type Props = {
+    eyebrow?: string;
+    title?: string;
+    text?: string;
+    buttonLabel?: string;
+};
+
+export function CtaBanner({
+    eyebrow = "Booking enquiries · India and worldwide",
+    title = "Have a story waiting to be told?",
+    text = "Whether it is a campaign for your label, a portrait series, a space or a wedding, tell me about the story you want to tell.",
+    buttonLabel = "Start an enquiry",
+}: Props) {
     return (
         <section
             aria-labelledby="cta-heading"
@@ -11,19 +23,16 @@ export function CtaBanner() {
         >
             <Container>
                 <Reveal>
-                    <p className="label-caps text-accent">Booking enquiries · India and worldwide</p>
+                    <p className="label-caps text-accent">{eyebrow}</p>
                     <h2
                         id="cta-heading"
                         className="mx-auto mt-4 max-w-3xl text-4xl leading-tight tracking-[-0.02em] md:text-6xl"
                     >
-                        Have a story waiting to be told?
+                        {title}
                     </h2>
-                    <p className="text-muted mx-auto mt-6 max-w-xl">
-                        Whether it is a campaign for your label, a portrait series, a space or a wedding, tell me
-                        about the story you want to tell.
-                    </p>
+                    <p className="text-muted mx-auto mt-6 max-w-xl">{text}</p>
                     <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-                        <ButtonLink to="/contact">Start an enquiry</ButtonLink>
+                        <ButtonLink to="/contact">{buttonLabel}</ButtonLink>
                         <a
                             href={`mailto:${site.email}`}
                             className="hover:text-accent underline underline-offset-8"
