@@ -5,6 +5,14 @@ export type Recognition = { year: string; title: string; detail: string };
 
 export const about = {
   headline: { lead: "Quiet truth,", emphasis: "raw grace." },
+  portrait: {
+    id: "portbw",
+    alt: "Black and white portrait of Arjun Mehta holding a rangefinder camera",
+  },
+  fieldImage: {
+    id: "field",
+    alt: "A photographer kneeling beside a tripod on the ghats of Varanasi at dawn",
+  },
 
   bio: [
     "I'm Arjun, a freelance photographer based in Mumbai. I picked up my first camera in 2016, a second-hand DSLR bought with pocket money, and spent my college years photographing the city's lanes, local trains and monsoon light.",
