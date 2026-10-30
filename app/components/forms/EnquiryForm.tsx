@@ -1,24 +1,118 @@
-import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import {
+    Building2,
+    Check,
+    Heart,
+    Shirt,
+    Sparkles,
+    UserRound,
+    type LucideIcon,
+} from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { useForm, type UseFormRegisterReturn } from "react-hook-form";
 import { Link, useSearchParams } from "react-router";
 import { ButtonLink } from "~/components/ui/ButtonLink";
 import { Field, controlClass } from "~/components/ui/Field";
 import { services } from "~/data/services";
 import { site } from "~/data/site";
-import { emptyEnquiry, enquirySchema, timeframeOptions, type EnquiryValues } from "~/lib/enquirySchema";
-import { submitEnquiry } from "~/lib/submitEnquiry";
+import {
+    budgetOptions,
+    emptyEnquiry,
+    enquirySchema,
+    timeframeOptions,
+    type EnquiryValues,
+} from "~/lib/enquirySchema";
+import { makeReference, submitEnquiry } from "~/lib/submitEnquiry";
 
 const OTHER = "other";
+
+const typeIcons: Record<string, LucideIcon> = {
+    "editorial-fashion": Shirt,
+    "portraiture-branding": UserRound,
+    "architecture-spaces": Building2,
+    "weddings-celebrations": Heart,
+    [OTHER]: Sparkles,
+};
+
 const projectOptions = [
     ...services.map((service) => ({ value: service.id, label: service.title })),
     { value: OTHER, label: "Something else" },
 ];
 
+type Choice = { value: string; label: string; hint?: string; icon?: LucideIcon };
+
+// A group of big "pick one" cards. It is a real set of radio buttons underneath, so the
+// keyboard (arrow keys) and screen readers work as they should.
+function ChoiceGroup({
+    id,
+    legend,
+    error,
+    choices,
+    columns,
+    field,
+}: {
+    id: string;
+    legend: string;
+    error?: string;
+    choices: readonly Choice[];
+    columns: string;
+    field: UseFormRegisterReturn;
+}) {
+    return (
+        <fieldset aria-describedby={error ? `${id}-error` : undefined}>
+            <legend className="label-caps text-muted">
+                {legend}
+                <span aria-hidden="true" className="text-accent">
+                    {" "}
+                    *
+                </span>
+            </legend>
+            <div className={`mt-3 grid gap-3 ${columns}`}>
+                {choices.map((choice) => {
+                    const Icon = choice.icon;
+                    return (
+                        <label
+                            key={choice.value}
+                            className="border-line hover:border-accent has-:checked:border-accent has-:checked:bg-surface has-:focus-visible:outline-accent relative flex cursor-pointer items-start gap-3 border p-4 transition-colors has-:focus-visible:outline-2 has-:focus-visible:outline-offset-2"
+                        >
+                            <input type="radio" value={choice.value} className="peer sr-only" {...field} />
+                            {Icon && (
+                                <Icon
+                                    size={18}
+                                    strokeWidth={1.25}
+                                    aria-hidden="true"
+                                    className="text-muted mt-0.5 shrink-0"
+                                />
+                            )}
+                            <span className="block">
+                                <span className="block text-sm">{choice.label}</span>
+                                {choice.hint && (
+                                    <span className="text-muted mt-1 block text-xs">{choice.hint}</span>
+                                )}
+                            </span>
+                            <Check
+                                size={16}
+                                strokeWidth={1.5}
+                                aria-hidden="true"
+                                className="text-accent absolute top-3 right-3 opacity-0 peer-checked:opacity-100"
+                            />
+                        </label>
+                    );
+                })}
+            </div>
+            {error && (
+                <p id={`${id}-error`} className="text-error mt-2 text-sm">
+                    {error}
+                </p>
+            )}
+        </fieldset>
+    );
+}
+
 type Status =
     | { state: "editing" }
     | { state: "error"; message: string }
-    | { state: "sent"; demo: boolean };
+    | { state: "sent"; demo: boolean; reference: string };
 
 export function EnquiryForm() {
     const [status, setStatus] = useState<Status>({ state: "editing" });
@@ -51,13 +145,15 @@ export function EnquiryForm() {
 
     async function onSubmit(values: EnquiryValues) {
         const label = projectOptions.find((option) => option.value === values.projectType)?.label;
+        const reference = makeReference();
         const result = await submitEnquiry(values, {
             projectTypeLabel: label,
+            briefReference: reference,
             fallbackEmail: site.email,
         });
 
         if (result.ok) {
-            setStatus({ state: "sent", demo: result.demo });
+            setStatus({ state: "sent", demo: result.demo, reference });
             reset(emptyEnquiry);
         } else {
             setStatus({ state: "error", message: result.message });
@@ -67,14 +163,15 @@ export function EnquiryForm() {
     if (status.state === "sent") {
         return (
             <div role="status" className="bg-surface border-line border p-8 md:p-10">
-                <p className="label-caps text-accent">Message sent</p>
+                <p className="label-caps text-accent">Brief received</p>
                 <h2 ref={successRef} tabIndex={-1} className="mt-3 text-4xl leading-tight outline-none">
                     Thank you. Your enquiry has been received.
                 </h2>
+                <p className="label-caps text-muted mt-4">Brief reference: {status.reference}</p>
                 <p className="text-muted mt-4 max-w-xl">
                     {status.demo
                         ? "Demo mode: nothing was actually sent, because no Formspree form ID has been set up yet."
-                        : "We will read it and reply to the email address you gave."}
+                        : `I will read it and reply to the email address you gave, ${site.replyTime}. Quote the reference above if you write to follow up.`}
                 </p>
                 <div className="mt-8 flex flex-wrap gap-4">
                     <ButtonLink to="/portfolio">View the portfolio</ButtonLink>
@@ -91,73 +188,156 @@ export function EnquiryForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} noValidate className="space-y-12">
             {/* The trap field: invisible to people, tempting to bots. */}
-            <div aria-hidden="true" className="absolute left-[9999px] h-0 w-0 overflow-hidden">
+            <div aria-hidden="true" className="absolute -left[-9999px] h-0 w-0 overflow-hidden">
                 <label htmlFor="company">Leave this field empty</label>
                 <input id="company" type="text" tabIndex={-1} autoComplete="off" {...register("company")} />
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2">
-                <Field id="fullName" label="Full name" required error={errors.fullName?.message}>
-                    {(control) => (
-                        <input type="text" autoComplete="name" className={controlClass} {...control} {...register("fullName")} />
-                    )}
-                </Field>
-                <Field id="email" label="Email" required error={errors.email?.message}>
-                    {(control) => (
-                        <input type="email" autoComplete="email" className={controlClass} {...control} {...register("email")} />
-                    )}
-                </Field>
+            <div className="space-y-8">
+                <h3 className="label-caps text-accent border-line border-b pb-3">01 // About you</h3>
+                <div className="grid gap-8 md:grid-cols-2">
+                    <Field id="fullName" label="Full name" required error={errors.fullName?.message}>
+                        {(control) => (
+                            <input
+                                type="text"
+                                autoComplete="name"
+                                className={controlClass}
+                                {...control}
+                                {...register("fullName")}
+                            />
+                        )}
+                    </Field>
+                    <Field id="email" label="Email" required error={errors.email?.message}>
+                        {(control) => (
+                            <input
+                                type="email"
+                                autoComplete="email"
+                                className={controlClass}
+                                {...control}
+                                {...register("email")}
+                            />
+                        )}
+                    </Field>
+                    <Field id="phone" label="Phone or WhatsApp" error={errors.phone?.message}>
+                        {(control) => (
+                            <input
+                                type="tel"
+                                autoComplete="tel"
+                                className={controlClass}
+                                {...control}
+                                {...register("phone")}
+                            />
+                        )}
+                    </Field>
+                    <Field
+                        id="organisation"
+                        label="Brand, label or publication"
+                        error={errors.organisation?.message}
+                    >
+                        {(control) => (
+                            <input
+                                type="text"
+                                autoComplete="organization"
+                                className={controlClass}
+                                {...control}
+                                {...register("organisation")}
+                            />
+                        )}
+                    </Field>
+                </div>
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2">
-                <Field id="phone" label="Phone" error={errors.phone?.message}>
-                    {(control) => (
-                        <input type="tel" autoComplete="tel" className={controlClass} {...control} {...register("phone")} />
-                    )}
-                </Field>
-                <Field id="referral" label="How did you find this site?" error={errors.referral?.message}>
-                    {(control) => <input type="text" className={controlClass} {...control} {...register("referral")} />}
-                </Field>
+            <div className="space-y-8">
+                <h3 className="label-caps text-accent border-line border-b pb-3">02 // The commission</h3>
+
+                <ChoiceGroup
+                    id="projectType"
+                    legend="Type of project"
+                    error={errors.projectType?.message}
+                    choices={projectOptions.map((option) => ({ ...option, icon: typeIcons[option.value] }))}
+                    columns="sm:grid-cols-2 xl:grid-cols-3"
+                    field={register("projectType")}
+                />
+
+                <div className="grid gap-8 md:grid-cols-2">
+                    <Field
+                        id="timeframe"
+                        label="Preferred timeframe"
+                        required
+                        error={errors.timeframe?.message}
+                    >
+                        {(control) => (
+                            <select className={controlClass} {...control} {...register("timeframe")}>
+                                <option value="">Choose one</option>
+                                {timeframeOptions.map((option) => (
+                                    <option key={option} value={option}>
+                                        {option}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                    </Field>
+                    <Field id="location" label="City or venue of the shoot" error={errors.location?.message}>
+                        {(control) => (
+                            <input type="text" className={controlClass} {...control} {...register("location")} />
+                        )}
+                    </Field>
+                </div>
+
+                <ChoiceGroup
+                    id="budget"
+                    legend="Estimated investment"
+                    error={errors.budget?.message}
+                    choices={budgetOptions}
+                    columns="sm:grid-cols-2 xl:grid-cols-3"
+                    field={register("budget")}
+                />
             </div>
 
-            <div className="grid gap-8 md:grid-cols-2">
-                <Field id="projectType" label="Type of project" required error={errors.projectType?.message}>
+            <div className="space-y-8">
+                <h3 className="label-caps text-accent border-line border-b pb-3">03 // The story</h3>
+                <Field
+                    id="message"
+                    label="Tell me about your project"
+                    required
+                    hint="The mood, the place, the purpose. A few sentences is plenty."
+                    error={errors.message?.message}
+                >
                     {(control) => (
-                        <select className={controlClass} {...control} {...register("projectType")}>
-                            <option value="">Choose one</option>
-                            {projectOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.label}
-                                </option>
-                            ))}
-                        </select>
+                        <textarea
+                            rows={6}
+                            className={`${controlClass} resize-y`}
+                            {...control}
+                            {...register("message")}
+                        />
                     )}
                 </Field>
-                <Field id="timeframe" label="Preferred timeframe" required error={errors.timeframe?.message}>
-                    {(control) => (
-                        <select className={controlClass} {...control} {...register("timeframe")}>
-                            <option value="">Choose one</option>
-                            {timeframeOptions.map((option) => (
-                                <option key={option} value={option}>
-                                    {option}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                </Field>
+                <div className="grid gap-8 md:grid-cols-2">
+                    <Field
+                        id="reference"
+                        label="Moodboard or reference link"
+                        hint="For example a Pinterest board or a shared folder."
+                        error={errors.reference?.message}
+                    >
+                        {(control) => (
+                            <input
+                                type="url"
+                                inputMode="url"
+                                className={controlClass}
+                                {...control}
+                                {...register("reference")}
+                            />
+                        )}
+                    </Field>
+                    <Field id="referral" label="How did you find this site?" error={errors.referral?.message}>
+                        {(control) => (
+                            <input type="text" className={controlClass} {...control} {...register("referral")} />
+                        )}
+                    </Field>
+                </div>
             </div>
-
-            <Field
-                id="message"
-                label="Tell us about your project"
-                required
-                hint="The mood, the place, the purpose. A few sentences is plenty."
-                error={errors.message?.message}
-            >
-                {(control) => <textarea rows={6} className={`${controlClass} resize-y`} {...control} {...register("message")} />}
-            </Field>
 
             <div>
                 <div className="flex items-start gap-3">
