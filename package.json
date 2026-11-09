@@ -11,7 +11,8 @@
     "images": "node scripts/optimize-images.mjs",
     "og": "node scripts/make-og-image.mjs",
     "postbuild": "node scripts/copy-404.mjs",
-    "preview": "serve build/client"
+    "preview": "serve build/client",
+    "images:check": "node scripts/check-images.mjs"
   },
   "dependencies": {
     "@fontsource-variable/eb-garamond": "^5.3.0",

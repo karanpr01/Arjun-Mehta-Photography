@@ -1,52 +1,84 @@
-// Central place for brand facts. Anything marked PLACEHOLDER is NOT real:
-// replace it with the photographer's real details before publishing.
+// Everything here is DEMO CONTENT for a fictional photographer, "Arjun Mehta":
+// a 28-year-old freelance photographer from Mumbai who takes commissions in India and abroad.
+// He, his clients, publications and awards are invented for this concept project.
+
 export const site = {
   name: "Arjun Mehta Photography",
   shortName: "Arjun Mehta",
   tagline: "Every frame tells a story. Let's tell yours.",
+  role: "Freelance photographer · Mumbai",
 
   // The public web address. Set VITE_SITE_URL when you deploy; until then a fake example address is used.
   url: (
     (import.meta.env.VITE_SITE_URL as string | undefined) ??
     "https://example.com"
   ).replace(/\/$/, ""),
-
   // The picture shown when a link is shared on social media (made by `npm run og`).
   ogImage: "/og-default.jpg",
-
-  // Used when a page does not have its own description. Keep it factual.
   description:
-    "Photography portfolio of Arjun Mehta: selected projects, services and a simple way to start an enquiry.",
+    "Arjun Mehta is a freelance photographer based in Mumbai, shooting editorial, portrait, architecture and wedding work across India and worldwide.",
 
-  // About snippet on the Home page. The quote is SAMPLE COPY from the design; confirm it with the photographer.
+  heroIntro:
+    "Editorial, portrait and travel photography from Mumbai, for independent brands, publications and couples across India and abroad.",
+  heroAlt: "A single hot air balloon above fog-filled valleys at blue hour",
+
   aboutQuote:
     "Light is not merely illumination; it is the ink with which we carve memory into permanence.",
   aboutBody:
-    "[PLACEHOLDER: two or three sentences about the photographer's background and approach.]",
+    "Arjun is a 28-year-old freelance photographer from Mumbai. He picked up a camera in college, took his first paid commission at 22, and now shoots for independent labels, magazines and couples in India and overseas. His style pairs cinematic composition with unforced human warmth.",
   aboutAlt:
-    "Sample portrait of the photographer. Describe the real image here.",
+    "Arjun Mehta smiling as he inspects a film camera at a desk by a window",
 
-  // PLACEHOLDER: explain how pricing really works (quotes, deposits, travel costs...) once the photographer confirms it.
-  pricingNote:
-    "[PLACEHOLDER: how prices are confirmed, for example after a short conversation.]",
-
-  // PLACEHOLDER: the photographer's real typical reply time. Do not promise a time that is not kept.
-  replyTime: "[PLACEHOLDER: typical reply time]",
-
-  // PLACEHOLDER: example.com is a reserved fake domain, so this email can never reach a real person.
-  // SAMPLE COPY from the design mock-up. Confirm or rewrite with the photographer.
-  role: "Visual storyteller & director",
-  heroIntro:
-    "Editorial, portrait and brand photography, made with a cinematic eye for light and atmosphere.",
-  // Describe what is really in the hero photograph once the final image is chosen.
-  heroAlt: "Sample hero photograph. Describe the real image here.",
-  email: "hello@example.com",
-  // PLACEHOLDER
-  location: "[PLACEHOLDER: city / service area]",
-
-  // PLACEHOLDER: these point at the networks' home pages, not at real profiles.
-  social: [
-    { label: "Instagram", href: "https://www.instagram.com/" },
-    { label: "Behance", href: "https://www.behance.net/" },
+  stats: [
+    { value: 6, suffix: "+", label: "Years of practice" },
+    { value: 150, suffix: "+", label: "Shoots delivered" },
+    { value: 9, suffix: "", label: "Countries photographed" },
   ],
-} as const;
+
+  pricingNote:
+    "Starting prices are guides in Indian rupees (₹) and US dollars ($) for a typical commission. A tailored estimate follows a short call. Travel and extended licensing are quoted separately.",
+  replyTime: "usually within 24 to 48 hours",
+
+  // Demo contact details. The email uses the reserved ".example" domain, so it can never reach a
+  // real person. No phone number is shown, because there is no safe fictional Indian number range.
+  email: "hello@arjunmehta.example",
+  location: "Mumbai, India · Available worldwide",
+
+  studios: [
+    {
+      id: "mumbai",
+      name: "Mumbai Studio",
+      area: "Bandra West, Mumbai 400050",
+      note: "Shared studio space · By appointment only",
+      image: {
+        id: "mumbai",
+        alt: "A bright studio room overlooking the Mumbai skyline",
+      },
+    },
+    {
+      id: "remote",
+      name: "On location & remote",
+      area: "Across India and worldwide",
+      note: "Travel quoted per project · Remote editing for overseas clients",
+      image: {
+        id: "desk",
+        alt: "A photographer's editing desk with prints, film rolls and a monitor",
+      },
+    },
+  ],
+
+  // Add real profile links here if you create demo accounts. While this list is empty,
+  // no social links are shown anywhere on the site.
+  social: [] as { label: string; href: string }[],
+
+  // The credit that shows this is a concept project (shown in the footer and on the About page).
+  builtBy: {
+    name: "Prem Karn",
+    label: "Concept project designed and built by Prem",
+    // Where the credit should link to (your portfolio or LinkedIn). Leave empty for no link.
+    href: "" as string,
+    // Honest note about where the photographs come from.
+    imageNote:
+      "Photographs are licensed stock images and AI-generated artwork, used for demonstration.",
+  },
+};

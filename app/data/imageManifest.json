@@ -1,7 +1,7 @@
 {
-  "about-portrait": {
+  "arch": {
     "width": 2400,
-    "height": 3600,
+    "height": 1320,
     "widths": [
       480,
       800,
@@ -10,9 +10,9 @@
       2400
     ]
   },
-  "aura-of-silk-and-stone": {
+  "aura": {
     "width": 2400,
-    "height": 3596,
+    "height": 2979,
     "widths": [
       480,
       800,
@@ -21,9 +21,64 @@
       2400
     ]
   },
-  "echoes-of-the-monsoon": {
+  "balloons": {
     "width": 2400,
-    "height": 3600,
+    "height": 1802,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "ceramic": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "desk": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "field": {
+    "width": 2400,
+    "height": 1610,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "fort": {
+    "width": 2400,
+    "height": 2979,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "ghats": {
+    "width": 2400,
+    "height": 2979,
     "widths": [
       480,
       800,
@@ -34,7 +89,7 @@
   },
   "hero": {
     "width": 2400,
-    "height": 1600,
+    "height": 1596,
     "widths": [
       480,
       800,
@@ -43,18 +98,7 @@
       2400
     ]
   },
-  "solitude-in-cappadocia": {
-    "width": 2400,
-    "height": 1602,
-    "widths": [
-      480,
-      800,
-      1200,
-      1600,
-      2400
-    ]
-  },
-  "varanasi-ghats-at-dawn": {
+  "horse": {
     "width": 2400,
     "height": 1600,
     "widths": [
@@ -65,9 +109,152 @@
       2400
     ]
   },
-  "velvet-nocturne": {
+  "lookbook": {
+    "width": 2400,
+    "height": 2979,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "monolith": {
+    "width": 2400,
+    "height": 1835,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "mumbai": {
+    "width": 2400,
+    "height": 3199,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "oldman": {
+    "width": 2400,
+    "height": 2979,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "portbw": {
+    "width": 2400,
+    "height": 2979,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "portrait": {
+    "width": 2400,
+    "height": 2979,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "portrait2": {
+    "width": 2400,
+    "height": 2979,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "rock": {
     "width": 2400,
     "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "solitude": {
+    "width": 2400,
+    "height": 1422,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "spiti": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "subterr": {
+    "width": 2400,
+    "height": 1610,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "valley": {
+    "width": 2400,
+    "height": 1600,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "velvet": {
+    "width": 2400,
+    "height": 1610,
+    "widths": [
+      480,
+      800,
+      1200,
+      1600,
+      2400
+    ]
+  },
+  "wedding": {
+    "width": 2400,
+    "height": 1610,
     "widths": [
       480,
       800,

@@ -25,22 +25,27 @@ export function ProjectCard({ project, aspect = "landscape", sizes }: Props) {
                 />
             </div>
 
-            <div className="mt-5">
-                <p className="label-caps text-accent">{project.category}</p>
-                <h3 className="mt-2 text-2xl leading-snug md:text-3xl">
-                    {/* The ::after stretches this link over the whole card, so the entire card is clickable
-              but screen readers still hear just one link. */}
-                    <Link
-                        to={`/portfolio/${project.slug}`}
-                        className="outline-none after:absolute after:inset-0 after:content-['']"
-                    >
-                        {project.title}
-                    </Link>
-                </h3>
-                <p className="text-muted mt-1 text-sm">
-                    {project.location} · {project.year}
+            <div className="mt-4 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                <p className="label-caps text-muted">
+                    {project.plate ? `Plate ${project.plate} · ` : ""}
+                    {project.location}, {project.year}
                 </p>
+                {project.badge && (
+                    <p className="label-caps text-accent border-line border px-2 py-1">{project.badge}</p>
+                )}
             </div>
+
+            <h3 className="mt-2 text-2xl leading-snug md:text-3xl">
+                {/* The ::after stretches this link over the whole card, so the entire card is clickable
+            but screen readers still hear just one link. */}
+                <Link
+                    to={`/portfolio/${project.slug}`}
+                    className="outline-none after:absolute after:inset-0 after:content-['']"
+                >
+                    {project.title}
+                </Link>
+            </h3>
+            <p className="text-muted mt-1 text-sm">{project.descriptor}</p>
         </article>
     );
 }

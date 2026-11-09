@@ -1,4 +1,4 @@
-import type { EnquiryValues } from "~/lib/enquirySchema";
+import { budgetOptions, type EnquiryValues } from "./enquirySchema";
 
 export type SubmitResult =
   | { ok: true; demo: boolean }
@@ -7,9 +7,19 @@ export type SubmitResult =
 type Options = {
   formId?: string; // the Formspree form ID, from the environment
   projectTypeLabel?: string; // readable name of the chosen project type
+  briefReference?: string; // the reference number shown to the visitor, so you can match it
   fetchImpl?: typeof fetch; // can be swapped in tests
   fallbackEmail?: string; // shown in the error message
 };
+
+// A short reference such as "AM-2026-7F3A9C", shown to the visitor and sent with the enquiry.
+export function makeReference(year = new Date().getFullYear()): string {
+  const bytes = crypto.getRandomValues(new Uint8Array(3));
+  const code = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"))
+    .join("")
+    .toUpperCase();
+  return `AM-${year}-${code}`;
+}
 
 // Sends one enquiry to Formspree and turns every possible outcome into a simple result.
 export async function submitEnquiry(
@@ -19,6 +29,7 @@ export async function submitEnquiry(
   const {
     formId = import.meta.env.VITE_FORMSPREE_FORM_ID as string | undefined,
     projectTypeLabel = values.projectType,
+    briefReference = "(none)",
     fetchImpl = fetch,
     fallbackEmail = "us by email",
   } = options;
@@ -33,6 +44,9 @@ export async function submitEnquiry(
   }
 
   const genericError = `Sorry, your message could not be sent. Please try again, or contact ${fallbackEmail}.`;
+  const budgetLabel = budgetOptions.find(
+    (option) => option.value === values.budget,
+  )?.label;
 
   try {
     const response = await fetchImpl(`https://formspree.io/f/${formId}`, {
@@ -42,13 +56,18 @@ export async function submitEnquiry(
         Accept: "application/json",
       },
       body: JSON.stringify({
-        _subject: "New website enquiry",
+        _subject: `New website enquiry (${briefReference})`,
+        brief_reference: briefReference,
         name: values.fullName,
         email: values.email,
         phone: values.phone || "(not given)",
+        organisation: values.organisation || "(not given)",
         project_type: projectTypeLabel,
         timeframe: values.timeframe,
+        location: values.location || "(not given)",
+        budget: budgetLabel ?? values.budget,
         message: values.message,
+        reference_link: values.reference || "(not given)",
         found_us_via: values.referral || "(not given)",
         consent: "agreed",
       }),

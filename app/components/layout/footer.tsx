@@ -61,6 +61,22 @@ export function Footer() {
           <Link to="/privacy" className="hover:text-accent transition-colors">
             Privacy Policy
           </Link>
+          <p className="w-full">
+            {site.builtBy.href ? (
+              <a
+                href={site.builtBy.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-accent underline underline-offset-4"
+              >
+                {site.builtBy.label}
+                <span className="sr-only"> (opens in a new tab)</span>
+              </a>
+            ) : (
+              site.builtBy.label
+            )}
+            . {site.builtBy.imageNote}
+          </p>
         </div>
       </Container>
     </footer>

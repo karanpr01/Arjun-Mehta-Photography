@@ -1,33 +1,55 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { ArrowRight } from "lucide-react";
-import { useRef } from "react";
+import { ArrowRight, Pause, Play } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
 import { ResponsiveImage } from "~/components/gallery/ResponsiveImage";
 import { ButtonLink } from "~/components/ui/ButtonLink";
 import { Container } from "~/components/ui/Container";
+import { heroSlides } from "~/data/home";
 import { site } from "~/data/site";
 
 gsap.registerPlugin(useGSAP);
 
+const SLIDE_MS = 7000; // how long each slide stays
+
 export function Hero() {
     const sectionRef = useRef<HTMLElement>(null);
+    const [index, setIndex] = useState(0);
+    const [playing, setPlaying] = useState(true); // the visitor's own choice (Pause / Play button)
+    const [hovering, setHovering] = useState(false); // pointer or keyboard focus is inside the hero
+    const [reduceMotion, setReduceMotion] = useState(false);
 
-    // The intro: the photo settles in, then the text rises one line at a time.
-    // The starting (hidden) look is set in app.css, so there is no flash before this runs.
+    // The slideshow only advances when nothing says "stop".
+    const running = playing && !hovering && !reduceMotion;
+    const slide = heroSlides[index];
+
+    // Respect the "reduce motion" setting of the visitor's device.
+    useEffect(() => {
+        const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const update = () => setReduceMotion(media.matches);
+        update();
+        media.addEventListener("change", update);
+        return () => media.removeEventListener("change", update);
+    }, []);
+
+    // Move to the next slide after a pause. Starts again whenever the slide changes.
+    useEffect(() => {
+        if (!running) return;
+        const timer = window.setTimeout(() => setIndex((i) => (i + 1) % heroSlides.length), SLIDE_MS);
+        return () => window.clearTimeout(timer);
+    }, [running, index]);
+
+    // The intro: the text rises one line at a time. The starting (hidden) look is set in app.css.
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
             mm.add("(prefers-reduced-motion: no-preference)", () => {
-                const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
-                intro
-                    .fromTo("[data-hero-image]", { scale: 1.08 }, { scale: 1, duration: 2 }, 0)
-                    .fromTo(
-                        "[data-hero]",
-                        { autoAlpha: 0, y: 24 },
-                        { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14 },
-                        0.2,
-                    );
+                gsap.fromTo(
+                    "[data-hero]",
+                    { autoAlpha: 0, y: 24 },
+                    { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14, delay: 0.2, ease: "power3.out" },
+                );
             });
             return () => mm.revert();
         },
@@ -37,17 +59,41 @@ export function Hero() {
     return (
         <section
             ref={sectionRef}
-            aria-labelledby="hero-heading"
+            aria-roledescription="carousel"
+            aria-label="Featured work"
+            onMouseEnter={() => setHovering(true)}
+            onMouseLeave={() => setHovering(false)}
+            onFocus={() => setHovering(true)}
+            onBlur={(event) => {
+                if (!event.currentTarget.contains(event.relatedTarget)) setHovering(false);
+            }}
             className="text-on-image relative h-[calc(100svh-4.75rem)] min-h-170 overflow-hidden bg-[#050505]"
         >
-            <div data-hero-image className="absolute inset-0">
-                <ResponsiveImage
-                    id="hero"
-                    alt={site.heroAlt}
-                    sizes="100vw"
-                    priority
-                    className="h-full w-full object-cover"
-                />
+            {/* The slides: they cross-fade, and the photo drifts slowly while it is on screen. */}
+            <div className="absolute inset-0">
+                {heroSlides.map((item, i) => {
+                    const active = i === index;
+                    return (
+                        <div
+                            key={item.image.id}
+                            role="group"
+                            aria-roledescription="slide"
+                            aria-label={`${i + 1} of ${heroSlides.length}`}
+                            aria-hidden={!active}
+                            className={`absolute inset-0 transition-opacity duration-1600 ease-out motion-reduce:transition-none ${active ? "opacity-100" : "opacity-0"
+                                }`}
+                        >
+                            <ResponsiveImage
+                                id={item.image.id}
+                                alt={item.image.alt}
+                                sizes="100vw"
+                                priority={i === 0}
+                                className={`h-full w-full object-cover transition-transform duration-9000 ease-linear motion-reduce:scale-100 motion-reduce:transition-none ${active ? "scale-[1.2]" : "scale-[1.06]"
+                                    }`}
+                            />
+                        </div>
+                    );
+                })}
             </div>
 
             {/* Dark gradients so the text stays readable on any photo. */}
@@ -56,7 +102,7 @@ export function Hero() {
                 className="absolute inset-0 bg-[linear-gradient(90deg,rgb(5_5_5/0.82),rgb(5_5_5/0.15)_70%),linear-gradient(0deg,rgb(5_5_5/0.7),transparent_45%)]"
             />
 
-            <Container className="relative flex h-full flex-col justify-end gap-6 pb-20 md:pb-28">
+            <Container className="relative flex h-full flex-col justify-end gap-6 pb-36 md:pb-40">
                 <p data-hero className="label-caps text-on-image-accent">
                     {site.shortName} · {site.role}
                 </p>
@@ -89,6 +135,61 @@ export function Hero() {
                     </Link>
                 </div>
             </Container>
+
+            {/* Slideshow controls: caption, slide buttons with a progress line, and Pause / Play. */}
+            <div className="absolute inset-x-0 bottom-5 z-10">
+                <Container className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+                    <p aria-live={running ? "off" : "polite"} className="label-caps text-on-image/80">
+                        <Link to={slide.href} className="hover:text-on-image-accent transition-colors">
+                            {slide.caption}
+                            <span className="sr-only"> (view project)</span>
+                        </Link>
+                    </p>
+
+                    <div className="flex items-end gap-2">
+                        <div role="group" aria-label="Choose slide" className="flex">
+                            {heroSlides.map((item, i) => (
+                                <button
+                                    key={item.image.id}
+                                    type="button"
+                                    aria-label={`Show slide ${i + 1}: ${item.caption}`}
+                                    aria-current={i === index}
+                                    onClick={() => setIndex(i)}
+                                    className="hover:text-on-image-accent flex min-h-11 min-w-11 flex-col justify-end gap-2 px-2 pb-2 text-left transition-colors"
+                                >
+                                    <span className="label-caps">0{i + 1}</span>
+                                    <span className="bg-on-image/30 relative block h-px w-9">
+                                        {i === index && (
+                                            <span
+                                                key={`${index}-${running}`}
+                                                className="bg-on-image-accent absolute inset-y-0 left-0 block h-px w-full"
+                                                style={
+                                                    running
+                                                        ? { animation: `hero-progress ${SLIDE_MS}ms linear forwards` }
+                                                        : undefined
+                                                }
+                                            />
+                                        )}
+                                    </span>
+                                </button>
+                            ))}
+                        </div>
+
+                        <button
+                            type="button"
+                            onClick={() => setPlaying((value) => !value)}
+                            aria-label={playing ? "Pause slideshow" : "Play slideshow"}
+                            className="hover:text-on-image-accent inline-flex size-11 items-center justify-center transition-colors"
+                        >
+                            {playing ? (
+                                <Pause size={18} strokeWidth={1.5} aria-hidden="true" />
+                            ) : (
+                                <Play size={18} strokeWidth={1.5} aria-hidden="true" />
+                            )}
+                        </button>
+                    </div>
+                </Container>
+            </div>
         </section>
     );
 }
