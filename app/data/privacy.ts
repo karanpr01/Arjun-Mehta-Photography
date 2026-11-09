@@ -9,7 +9,18 @@ export type PrivacySection = {
   paragraphs: string[];
   list?: string[];
   link?: { label: string; href: string };
+  table?: { head: string[]; rows: string[][] };
 };
+
+export const lastReviewed = "25 October 2026";
+
+// A short, checkable summary shown beside the full policy.
+export const privacySummary = [
+  "This site sets no cookies.",
+  "There is no analytics, advertising or tracking.",
+  "Fonts and images are served from the site itself.",
+  "Enquiries go to Formspree and reach one person.",
+];
 
 export const privacySections: PrivacySection[] = [
   {
@@ -75,6 +86,28 @@ export const privacySections: PrivacySection[] = [
     ],
   },
   {
+    id: "services-used",
+    title: "Services this site relies on",
+    paragraphs: [
+      "Only two outside services touch this site, and only for the jobs listed here.",
+    ],
+    table: {
+      head: ["Provider", "What it does here", "What it receives"],
+      rows: [
+        [
+          "Formspree",
+          "Delivers the enquiry form to the developer's inbox",
+          "The details typed into the form",
+        ],
+        [
+          "Vercel",
+          "Hosts and delivers the website's files",
+          "Standard request logs, such as IP address and time",
+        ],
+      ],
+    },
+  },
+  {
     id: "your-rights",
     title: "Your rights",
     paragraphs: [
@@ -86,7 +119,7 @@ export const privacySections: PrivacySection[] = [
     title: "Changes to this page",
     paragraphs: [
       "If the way this site works changes, this page will be updated.",
-      "Last reviewed: 25 October 2026.",
+      `Last reviewed: ${lastReviewed}.`,
     ],
   },
   {
