@@ -144,9 +144,9 @@
 
 /* ---------- 4. MOTION ---------- */
 
-/* Hero intro: the starting look of the text. It only applies when JavaScript is running
+/* Starting looks for the intro animations. They only apply when JavaScript is running
    (the "js" class) AND the visitor has not asked for reduced motion. GSAP then animates to the
-   normal look. If the script is very slow or fails, the "failsafe" shows everything after 4 seconds. */
+   normal look. If the script is very slow or fails, each "failsafe" shows everything after 4 seconds. */
 @media (prefers-reduced-motion: no-preference) {
   .js [data-hero] {
     opacity: 0;
@@ -154,13 +154,71 @@
     animation: hero-failsafe 0.01s 4s forwards;
   }
 
+  .js [data-words] .word-inner {
+    transform: translateY(110%);
+    animation: words-failsafe 0.01s 4s forwards;
+  }
+
   /* Dialogs (mobile menu, image viewer) fade in. */
   dialog[open] {
     animation: dialog-in 0.3s ease-out;
   }
+
+  /* A page fades in after a click on a link. */
+  .page-enter {
+    animation: page-in 0.6s ease-out both;
+  }
+}
+
+/* Each word sits in a clipped strip, so it can slide up into view. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.04em 0.14em;
+  margin: 0 -0.04em -0.14em;
+}
+
+.word-inner {
+  display: inline-block;
+}
+
+/* The entry curtain is hidden unless the head script switched it on. */
+.curtain {
+  display: none;
+}
+
+.show-curtain .curtain {
+  display: block;
+  animation: curtain-failsafe 0.01s 4s forwards;
 }
 
 @keyframes hero-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes words-failsafe {
+  to {
+    transform: none;
+  }
+}
+
+@keyframes curtain-failsafe {
+  to {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
   to {
     opacity: 1;
     transform: none;

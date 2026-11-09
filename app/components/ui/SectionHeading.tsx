@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Words } from "~/components/motion/Words";
 
 type Props = {
     id: string; // lets the section name itself after this heading
@@ -12,9 +13,13 @@ export function SectionHeading({ id, eyebrow, title, children }: Props) {
         <div className="flex flex-wrap items-end justify-between gap-6">
             <div>
                 <p className="label-caps text-accent">{eyebrow}</p>
-                <h2 id={id} className="mt-3 text-4xl leading-tight tracking-[-0.02em] md:text-5xl">
+                <Words
+                    as="h2"
+                    id={id}
+                    className="mt-3 text-4xl leading-tight tracking-[-0.02em] md:text-5xl"
+                >
                     {title}
-                </h2>
+                </Words>
             </div>
             {children}
         </div>
