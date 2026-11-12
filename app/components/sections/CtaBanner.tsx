@@ -32,7 +32,7 @@ export function CtaBanner({
                     </h2>
                     <p className="text-muted mx-auto mt-6 max-w-xl">{text}</p>
                     <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
-                        <ButtonLink to="/contact">{buttonLabel}</ButtonLink>
+                        <ButtonLink to="/contact" magnetic>{buttonLabel}</ButtonLink>
                         <a
                             href={`mailto:${site.email}`}
                             className="hover:text-accent underline underline-offset-8"

@@ -134,7 +134,7 @@ export function Hero() {
                 </p>
 
                 <div data-hero className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
-                    <ButtonLink to="/portfolio" variant="onImage">
+                              <ButtonLink to="/portfolio" variant="onImage" magnetic>
                         Explore selected work
                         <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
                     </ButtonLink>

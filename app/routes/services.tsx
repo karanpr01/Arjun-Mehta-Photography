@@ -14,6 +14,7 @@ import { processSteps } from "~/data/process";
 import { services } from "~/data/services";
 import { site } from "~/data/site";
 import { pageMeta } from "~/lib/seo";
+import { Words } from "~/components/motion/Words";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -40,12 +41,14 @@ export default function Services() {
           <div className="flex flex-wrap items-end justify-between gap-8">
             <div className="max-w-3xl">
               <p className="label-caps text-accent">Rates &amp; commissions</p>
-              <h1
+              <Words
+                as="h1"
                 id="services-page-heading"
+                trigger="load"
                 className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl"
               >
                 Commissioned Services &amp; <em className="text-accent">Engagements</em>
-              </h1>
+              </Words>
               <p className="text-muted mt-6 max-w-xl">
                 Choose the kind of project you have in mind, then tell me the details. I work with
                 independent labels, magazines, architects, studios and couples, in India and abroad.

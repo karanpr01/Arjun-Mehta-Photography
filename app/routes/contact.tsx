@@ -9,6 +9,7 @@ import { about } from "~/data/about";
 import { nextSteps, quickAnswers } from "~/data/contact";
 import { site } from "~/data/site";
 import { pageMeta } from "~/lib/seo";
+import { Words } from "~/components/motion/Words";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -26,9 +27,14 @@ export default function Contact() {
         <Container className="grid gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
           <div className="lg:col-span-7">
             <p className="label-caps text-accent">Commission enquiries · 2027 season</p>
-            <h1 id="contact-heading" className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl">
+            <Words
+              as="h1"
+              id="contact-heading"
+              trigger="load"
+              className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl"
+            >
               Start a <em className="text-accent">Conversation</em>
-            </h1>
+            </Words>
             <p className="text-muted mt-6 max-w-xl">
               I am currently taking commissions in India and abroad. Tell me about your project and
               I will get back to you {site.replyTime}. Fields marked with an asterisk are required.
@@ -44,8 +50,8 @@ export default function Contact() {
                   </p>
                   <p
                     className={`label-caps border px-2 py-1 ${slot.status === "Limited"
-                        ? "border-accent text-accent"
-                        : "border-line text-muted"
+                      ? "border-accent text-accent"
+                      : "border-line text-muted"
                       }`}
                   >
                     {slot.status}

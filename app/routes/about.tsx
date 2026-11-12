@@ -10,6 +10,8 @@ import { Stat } from "~/components/ui/Stat";
 import { about } from "~/data/about";
 import { site } from "~/data/site";
 import { pageMeta } from "~/lib/seo";
+import { Parallax } from "~/components/motion/Parallax";
+import { Words } from "~/components/motion/Words";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -30,7 +32,7 @@ export default function About() {
       <section aria-labelledby="about-page-heading" className="pt-16 pb-24 md:pt-24 md:pb-32">
         <Container className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
           <figure className="lg:col-span-5">
-            <div className="bg-surface aspect-4/5 overflow-hidden">
+            <Parallax className="bg-surface aspect-4/5">
               <ResponsiveImage
                 id={about.portrait.id}
                 alt={about.portrait.alt}
@@ -38,7 +40,7 @@ export default function About() {
                 priority
                 className="h-full w-full object-cover"
               />
-            </div>
+            </Parallax>
             <figcaption className="label-caps text-muted mt-4 flex flex-wrap justify-between gap-x-4 gap-y-1">
               <span>Plate 01 // The photographer</span>
               <span>Mumbai</span>
@@ -47,9 +49,14 @@ export default function About() {
 
           <div className="lg:col-span-7">
             <p className="label-caps text-accent">Biography &amp; practice</p>
-            <h1 id="about-page-heading" className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl">
+            <Words
+              as="h1"
+              id="about-page-heading"
+              trigger="load"
+              className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl"
+            >
               {about.headline.lead} <em className="text-accent">{about.headline.emphasis}</em>
-            </h1>
+            </Words>
 
             <figure className="border-line mt-8 border-l-2 pl-6">
               <blockquote>
@@ -224,8 +231,8 @@ export default function About() {
                   <p className="label-caps text-muted">{slot.months}</p>
                   <p
                     className={`label-caps border px-2 py-1 ${slot.status === "Limited"
-                        ? "border-accent text-accent"
-                        : "border-line text-muted"
+                      ? "border-accent text-accent"
+                      : "border-line text-muted"
                       }`}
                   >
                     {slot.status}

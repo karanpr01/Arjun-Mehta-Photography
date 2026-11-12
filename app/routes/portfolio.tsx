@@ -20,6 +20,7 @@ import {
 } from "~/data/projects";
 import { useHydrated } from "~/hooks/useHydrated";
 import { pageMeta } from "~/lib/seo";
+import { Words } from "~/components/motion/Words";
 
 export function meta({ }: Route.MetaArgs) {
   return pageMeta({
@@ -70,6 +71,7 @@ function SheetTile({ project }: { project: Project }) {
 export default function Portfolio() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [archiveOpen, setArchiveOpen] = useState(false);
+  const [changed, setChanged] = useState(false);
 
   // The server builds this page without knowing the visitor's URL query, so we only
   // apply the filter and layout once the page is live in the browser. That keeps both versions identical.
@@ -86,8 +88,13 @@ export default function Portfolio() {
 
   const catalogTotal = projects.length + archive.length;
   const shown = archiveOpen ? catalogTotal : projects.length;
+  // A new key makes React build a fresh grid, which then fades in. We only do that after the
+  // visitor has changed something, never on the first load.
+  const gridKey = `${layout}-${active ?? "all"}`;
+  const enter = changed ? "grid-enter" : "";
 
   function update(changes: { category?: Category | null; layout?: Layout }) {
+    setChanged(true)
     const params = new URLSearchParams(searchParams);
     if ("category" in changes) {
       if (changes.category) params.set("category", categorySlug(changes.category));
@@ -110,9 +117,14 @@ export default function Portfolio() {
                 <span className="text-accent">Archive volume IV</span>{" "}
                 <span className="text-muted">— Selected commissions</span>
               </p>
-              <h1 id="portfolio-heading" className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl">
+              <Words
+                as="h1"
+                id="portfolio-heading"
+                trigger="load"
+                className="mt-4 text-5xl tracking-[-0.03em] md:text-7xl"
+              >
                 Selected Works <em className="text-accent">(2020–2025)</em>
-              </h1>
+              </Words>
               <p className="text-muted mt-6 max-w-xl">
                 A curated archive of editorial campaigns, intimate portraits, architectural studies
                 and documentary series, made in Mumbai and on the road between 2020 and 2025.
@@ -160,7 +172,9 @@ export default function Portfolio() {
               </button>
             </div>
           ) : layout === "asym" ? (
-            <div className="grid items-start gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-12">
+            <div
+              key={gridKey}
+              className={`grid items-start gap-x-10 gap-y-14 md:grid-cols-2 lg:grid-cols-12 ${enter}`}>
               {plates.map((project, index) => {
                 const slot = rhythm[index % rhythm.length];
                 return (
@@ -171,13 +185,17 @@ export default function Portfolio() {
               })}
             </div>
           ) : layout === "cols" ? (
-            <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
+            <div
+              key={gridKey}
+              className={`grid gap-x-8 gap-y-14 sm:grid-cols-2 lg:grid-cols-3 ${enter}`}>
               {plates.map((project) => (
                 <ProjectCard key={project.slug} project={project} aspect="portrait" sizes={tall} />
               ))}
             </div>
           ) : (
-            <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            <ul
+              key={gridKey}
+              className={`grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 ${enter}`}>
               {filtered.map((project) => (
                 <SheetTile key={project.slug} project={project} />
               ))}

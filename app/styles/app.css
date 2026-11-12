@@ -155,13 +155,24 @@
   }
 
   .js [data-words] .word-inner {
-    transform: translateY(110%);
+    transform: translateY(10%);
     animation: words-failsafe 0.01s 4s forwards;
   }
 
   /* Dialogs (mobile menu, image viewer) fade in. */
   dialog[open] {
     animation: dialog-in 0.3s ease-out;
+  }
+
+  /* Numbers that count up start out invisible, and the counter reveals them. */
+  .js [data-countup] {
+    visibility: hidden;
+    animation: countup-failsafe 0.01s 4s forwards;
+  }
+
+  /* The portfolio grid fades in again after the visitor changes the filter or layout. */
+  .grid-enter {
+    animation: page-in 0.5s ease-out both;
   }
 
   /* A page fades in after a click on a link. */
@@ -251,6 +262,12 @@
 @keyframes ticker {
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes countup-failsafe {
+  to {
+    visibility: visible;
   }
 }
 
