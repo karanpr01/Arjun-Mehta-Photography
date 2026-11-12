@@ -8,6 +8,7 @@ import { ButtonLink } from "~/components/ui/ButtonLink";
 import { Container } from "~/components/ui/Container";
 import { heroSlides } from "~/data/home";
 import { site } from "~/data/site";
+import { Words } from "../motion/Words";
 
 gsap.registerPlugin(useGSAP);
 
@@ -45,10 +46,18 @@ export function Hero() {
         () => {
             const mm = gsap.matchMedia();
             mm.add("(prefers-reduced-motion: no-preference)", () => {
+                const wait = document.documentElement.classList.contains("show-curtain") ? 1.9 : 0;
                 gsap.fromTo(
                     "[data-hero]",
                     { autoAlpha: 0, y: 24 },
-                    { autoAlpha: 1, y: 0, duration: 1, stagger: 0.14, delay: 0.2, ease: "power3.out" },
+                    {
+                        autoAlpha: 1,
+                        y: 0,
+                        duration: 1,
+                        stagger: 0.14,
+                        delay: 0.2 + wait,
+                        ease: "power3.out",
+                    },
                 );
             });
             return () => mm.revert();
@@ -107,13 +116,15 @@ export function Hero() {
                     {site.shortName} · {site.role}
                 </p>
 
-                <h1
-                    data-hero
+                <Words
+                    as="h1"
                     id="hero-heading"
+                    trigger="load"
+                    delay={0.1}
                     className="max-w-205 text-[clamp(2.75rem,7vw,5rem)] leading-[1.08] tracking-[-0.03em]"
                 >
                     Visual Poetry <em className="text-on-image-accent">Through Light</em> &amp; Shadow.
-                </h1>
+                </Words>
 
                 <p
                     data-hero
@@ -123,7 +134,7 @@ export function Hero() {
                 </p>
 
                 <div data-hero className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-2">
-                    <ButtonLink to="/portfolio" variant="onImage">
+                              <ButtonLink to="/portfolio" variant="onImage" magnetic>
                         Explore selected work
                         <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
                     </ButtonLink>

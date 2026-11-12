@@ -5,6 +5,8 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
+  useNavigationType
 } from "react-router";
 
 import "@fontsource-variable/eb-garamond";
@@ -21,6 +23,9 @@ import { SkipLink } from "./components/layout/SkipLink";
 import { NotFoundContent } from "~/components/sections/NotFoundContent";
 import { themeInitScript } from "~/lib/themeInit";
 import "./styles/app.css";
+import { useEffect, useRef } from "react";
+import { Curtain } from "~/components/motion/Curtain";
+import { ScrollProgress } from "~/components/motion/ScrollProgress";
 
 // Tell the browser about the two most important font files early, so text appears sooner.
 // (Only the Latin letters of the two fonts used above the fold. More preloads would slow the photo.)
@@ -62,12 +67,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
+  const { pathname } = useLocation();
+  const navigationType = useNavigationType();
+  const mainRef = useRef<HTMLElement>(null);
+  const firstRender = useRef(true);
+
+  // After the visitor moves to another page, put keyboard and screen-reader focus on the new
+  // content (without scrolling), as a normal page load would.
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
+    mainRef.current?.focus({ preventScroll: true });
+  }, [pathname]);
+
   return (
     <>
+      <Curtain />
+      <ScrollProgress />
       <SkipLink />
       <Header />
-      <main id="main" tabIndex={-1}>
-        <Outlet />
+      <main id="main" ref={mainRef} tabIndex={-1} className="outline-none">
+        {/* A fresh wrapper for each page. Clicking a link fades the new page in
+            (not on the first load, and not for Back and Forward). */}
+        <div key={pathname} className={navigationType === "PUSH" ? "page-enter" : undefined}>
+          <Outlet />
+        </div>
       </main>
       <Footer />
     </>

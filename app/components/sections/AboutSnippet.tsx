@@ -4,6 +4,7 @@ import { ResponsiveImage } from "~/components/gallery/ResponsiveImage";
 import { Reveal } from "~/components/motion/Reveal";
 import { Container } from "~/components/ui/Container";
 import { site } from "~/data/site";
+import { Parallax } from "../motion/Parallax";
 
 export function AboutSnippet() {
     return (
@@ -11,14 +12,14 @@ export function AboutSnippet() {
             <Container className="grid items-center gap-12 lg:grid-cols-12 lg:gap-16">
                 <div className="lg:col-span-5">
                     <div className="relative">
-                        <div className="bg-bg aspect-4/5 overflow-hidden">
+                        <Parallax className="bg-bg aspect-4/5">
                             <ResponsiveImage
                                 id="portrait"
                                 alt={site.aboutAlt}
                                 sizes="(min-width: 1024px) 40vw, 100vw"
                                 className="h-full w-full object-cover"
                             />
-                        </div>
+                        </Parallax>
                         <p className="bg-veil border-line absolute bottom-4 left-4 border p-4 backdrop-blur-md">
                             <span className="block font-serif text-xl">{site.shortName}</span>
                             <span className="label-caps text-muted mt-1 block">{site.role}</span>
