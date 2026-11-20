@@ -14,7 +14,7 @@ export const site = {
     "https://example.com"
   ).replace(/\/$/, ""),
   // The picture shown when a link is shared on social media (made by `npm run og`).
-  ogImage: "/og-default.jpg",
+  ogImage: "/og-default.png",
   description:
     "Arjun Mehta is a freelance photographer based in Mumbai, shooting editorial, portrait, architecture and wedding work across India and worldwide.",
 
